@@ -5,7 +5,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
     {
         public static void Main()
         {
-            Console.WriteLine("shakedRobinzon");
+            Console.WriteLine("shakedRobinzon2022");
         }
     }
 }
