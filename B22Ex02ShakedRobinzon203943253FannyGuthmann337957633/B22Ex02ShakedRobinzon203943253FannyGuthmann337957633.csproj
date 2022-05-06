@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">anycpu</Platform>
-    <ProjectGuid>{C3E89945-4696-439C-9CA1-21BD742388B2}</ProjectGuid>
+    <ProjectGuid>{CB075EF0-6A89-4879-BEEB-AE16B268406A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>B22Ex02ShakedRobinzon203943253FannyGuthmann337957633</RootNamespace>
     <AssemblyName>B22Ex02ShakedRobinzon203943253FannyGuthmann337957633</AssemblyName>
@@ -26,13 +26,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Coin.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Output.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="Input.cs" />
-=======
-    <Compile Include="Output.cs" />
->>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

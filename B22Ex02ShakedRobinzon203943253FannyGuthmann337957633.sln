@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.21
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B22Ex02ShakedRobinzon203943253FannyGuthmann337957633", "B22Ex02ShakedRobinzon203943253FannyGuthmann337957633\B22Ex02ShakedRobinzon203943253FannyGuthmann337957633.csproj", "{C3E89945-4696-439C-9CA1-21BD742388B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B22Ex02ShakedRobinzon203943253FannyGuthmann337957633", "B22Ex02ShakedRobinzon203943253FannyGuthmann337957633\B22Ex02ShakedRobinzon203943253FannyGuthmann337957633.csproj", "{CB075EF0-6A89-4879-BEEB-AE16B268406A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|anycpu = Release|anycpu
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C3E89945-4696-439C-9CA1-21BD742388B2}.Debug|anycpu.ActiveCfg = Debug|anycpu
-		{C3E89945-4696-439C-9CA1-21BD742388B2}.Debug|anycpu.Build.0 = Debug|anycpu
-		{C3E89945-4696-439C-9CA1-21BD742388B2}.Release|anycpu.ActiveCfg = Release|anycpu
-		{C3E89945-4696-439C-9CA1-21BD742388B2}.Release|anycpu.Build.0 = Release|anycpu
+		{CB075EF0-6A89-4879-BEEB-AE16B268406A}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{CB075EF0-6A89-4879-BEEB-AE16B268406A}.Debug|anycpu.Build.0 = Debug|anycpu
+		{CB075EF0-6A89-4879-BEEB-AE16B268406A}.Release|anycpu.ActiveCfg = Release|anycpu
+		{CB075EF0-6A89-4879-BEEB-AE16B268406A}.Release|anycpu.Build.0 = Release|anycpu
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2924E828-07F4-46BE-8C37-C855FE88A7D2}
+		SolutionGuid = {9DFFA125-9303-4D88-99B1-0DD8C1EAB73D}
 	EndGlobalSection
 EndGlobal
