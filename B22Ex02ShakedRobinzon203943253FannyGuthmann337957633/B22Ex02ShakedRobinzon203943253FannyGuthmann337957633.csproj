@@ -28,7 +28,11 @@
     <Compile Include="Coin.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Input.cs" />
+=======
+    <Compile Include="Output.cs" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
