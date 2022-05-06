@@ -10,17 +10,31 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
     public static void initializeGame()
         {
+            int numberOfPlayers;
+            int boardSize;
+
             Console.WriteLine("Welcome to Checkers!");
             Console.WriteLine("Please choose number of players: 1/2");
-            int numberOfPlayers = input.numberOfPlayers;
+            numberOfPlayers = input.numberOfPlayers;
             if ( numberOfPlayers == 2)
             {
                 Console.WriteLine("Not supported yet");
                 initializeGame();
             }
-            
-            input.enterName();
+            Player player1 = input.playerInitialize();
+            Player player2 = input.playerInitialize();
 
+            Console.WriteLine("Please choose board size: 6/8/10");
+            boardSize = input.boardSize();
+
+            initializeBoard();
+
+
+        }
+
+    public static void initializeBoard()
+        {
+            Coin[,] gameBoard = new Coin[,];
         }
     }
 }
