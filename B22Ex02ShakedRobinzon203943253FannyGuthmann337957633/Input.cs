@@ -71,9 +71,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return playerName;
         }
 
-        public static string nextMove(string i_move)
-        {
+        //public static string nextMove(string i_move)
+        //{
             
-        }
+        //}
     }
 }

@@ -8,16 +8,15 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         }
 
-        public static void Print2DArray(char[,] boardGame, int arrayDimention)
+        public static void Print2DArray(Coin[,] boardGame, int arrayDimention)
         {
-            
             char columnPrint = 'A';
             char rowPrint = 'a';
+
             // Print Column letters
             Console.Write("  ");
             for (int i = 0; i < arrayDimention; i++)
             {
-
                 Console.Write(" " + (char)(columnPrint+i) + "  ");
             }
 
@@ -26,16 +25,19 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
             for (int i = 1; i < arrayDimention + 1; i++)
             {
+
+            // Print row index
             Console.Write((char)(rowPrint + i - 1));
+
                 for (int j = 1; j < arrayDimention +1; j++)
                 {
-                    if (boardGame[i, j] != 'O' && boardGame[i, j] != 'X')
+                    if (boardGame[i,j] != null)
                     {
-                        Console.Write("|   ");
+                        Console.Write("| " + (char)boardGame[i, j].CoinColor + " ");
                     }
                     else
                     {
-                        Console.Write("| " + boardGame[i,j] + " ");
+                        Console.Write("|   ");
                     }
                     
                

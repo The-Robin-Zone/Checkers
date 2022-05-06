@@ -10,9 +10,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Output.Print2DArray(gameBoard,10);
             Console.ReadLine();
             
-
-
-
         }
 
         public static void initializeGame()
@@ -30,13 +27,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         }
 
-        public static char[,] initializeBoard(int i_boardSize)
+        public static Coin[,] initializeBoard(int i_boardSize)
         {
             int numOfCoinRows = (i_boardSize / 2) - 1;
             // add 2 rows and 2 colums for padding
             i_boardSize = i_boardSize + 2;
 
-            char[,] gameBoard = new char[i_boardSize, i_boardSize];
+            Coin[,] gameBoard = new Coin[i_boardSize, i_boardSize];
 
             //initialize O Coins
             for (int i = 1; i < numOfCoinRows + 1; i++)
@@ -46,13 +43,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     // odd row & even column
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        gameBoard[i, j] = 'O';
+                        gameBoard[i, j] = new Coin('O');
                     }
 
                     // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
                     { 
-                        gameBoard[i, j] = 'O';
+                        gameBoard[i, j] = new Coin('O');
                     }
 
                 }
@@ -65,13 +62,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     // odd row & even column
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        gameBoard[i, j] = 'X';
+                        gameBoard[i, j] = new Coin('X');
                     }
 
                     // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        gameBoard[i, j] = 'X';
+                        gameBoard[i, j] = new Coin('X');
                     }
 
                 }
