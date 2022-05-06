@@ -7,14 +7,31 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
 
         }
-        public static void Print2DArray(char[,] boardGame)
+        public static void Print2DArray(char[,] boardGame, int arrayDimention)
         {
-            for (int i = 1; i < boardGame.Length - 3; i++)
+            //Console.WriteLine(boardGame.Length);
+            //Console.WriteLine(boardGame[1, 2]);
+            //Console.WriteLine(boardGame[1, 4]);
+            //Console.WriteLine(boardGame[1, 6]);
+
+            for (int i = 1; i < arrayDimention + 1; i++)
             {
-                for (int j = 1; j < boardGame.Length - 3; j++)
+                //Console.WriteLine("i index is: " + i);
+                for (int j = 1; j < arrayDimention +1; j++)
                 {
-                    Console.WriteLine("shaked");
+                    //Console.WriteLine("j index is: " + j);
+                    if (boardGame[i, j] != 'O' && boardGame[i, j] != 'X')
+                    {
+                        Console.Write("-");
+                    }
+                    else
+                    {
+                        Console.Write(boardGame[i,j]);
+                    }
+                    
+               
                 }
+                Console.WriteLine();
             }
         }
     }
