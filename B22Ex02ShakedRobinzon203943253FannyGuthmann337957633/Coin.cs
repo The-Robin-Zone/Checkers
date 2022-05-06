@@ -4,7 +4,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
     public class Coin
     {
         private char coinColor;  //  black/white (O/X)
-        private string coinType; //  pawn/queen
+        private string coinType; //  pawn/king
         private string location; // location on board
 
         // Coin object constructor 

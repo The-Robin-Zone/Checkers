@@ -12,6 +12,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             
 
 
+
         }
 
         public static void initializeGame()
@@ -34,13 +35,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             int numOfCoinRows = (i_boardSize / 2) - 1;
             // add 2 rows and 2 colums for padding
             i_boardSize = i_boardSize + 2;
-            
+
             char[,] gameBoard = new char[i_boardSize, i_boardSize];
 
 
             //Console.WriteLine("actual board size is: " + i_boardSize);
             //Console.WriteLine("num of coing row is: " + numOfCoinRows);
-            
 
 
             //initialize O Coins
@@ -56,7 +56,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                     // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
-                    {  
+                    { 
                         gameBoard[i, j] = 'O';
                     }
 
