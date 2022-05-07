@@ -1,4 +1,6 @@
 ﻿using System;
+//using Ex02.ConsoleUtils;
+
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     internal class GameManager
@@ -21,6 +23,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.gameBoard.initializeBoard();
             this.HasGameWon = false;
             Output.PrintInstructions();
+            //Ex02.ConsoleUtils.Screen.Clear();
             StartGame();
 
         }
@@ -29,23 +32,16 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             Output.CurrentGameStatus(player1, player2, gameBoard);
 
-            int currentPlayerTurn = 1;
+            //int currentPlayerTurn = 1;
+            
+            //EndRound(); // temporarly here for checking - delete after checking
 
-            // temporarly here for checking
-            EndRound();
+            // Need to add case if you get another turn after captureing
 
             while (!HasGameWon)
             {
-                StartTurn(currentPlayerTurn);
-
-                if (currentPlayerTurn == 1)
-                {
-                    currentPlayerTurn = 2;
-                }
-                if (currentPlayerTurn == 2)
-                {
-                    currentPlayerTurn = 1;
-                }
+                StartTurn(player1);
+                StartTurn(player2);
             }
             EndRound();
 
@@ -57,8 +53,21 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Environment.Exit(0);
         }
 
-        public void StartTurn(int playerTurn)
+        public void StartTurn(Player CurrPlayerTurn)
         {
+            bool isMoveIllegal = true;
+
+            while (isMoveIllegal)
+            {
+                string PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
+                isMoveIllegal = !Input.IsMoveLegal(PlayerMove, this.gameBoard.BoardSize);
+
+                if( isMoveIllegal == true)
+                {
+                    Output.InvalidinputPrompt();
+                }
+                
+            }
 
         }
 

@@ -34,5 +34,10 @@
     <Compile Include="GameManager.cs" />
     <Compile Include="Logic.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Ex02.ConsoleUtils">
+      <HintPath>..\..\..\Desktop\Studies\Year 2\Semester 2\C#\hw2\Ex02.ConsoleUtils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

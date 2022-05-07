@@ -109,5 +109,44 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             
             return userOutput;
         }
+
+        public static string ReadMoveString(Player currPlayerTurn)
+        {
+            Console.WriteLine(currPlayerTurn.PlayerName + "'s turn (" + (char)currPlayerTurn.Color + "): ");
+            string i_playerMove = Console.ReadLine();
+            return i_playerMove;
+        }
+
+        public static bool IsMoveLegal(string i_playerMove,int sizeBoard)
+        {
+            bool moveStringIsValid = true;
+
+            if (i_playerMove.Length != 5)
+            {
+                moveStringIsValid = false;
+            }
+            else if (!char.IsUpper(i_playerMove[0]) || (i_playerMove[0] >= ('A' + sizeBoard - 2)))
+            {
+                moveStringIsValid = false;
+            }
+            else if (!char.IsLower(i_playerMove[1]) || (i_playerMove[1] >= ('a' + sizeBoard - 2)))
+            {
+                moveStringIsValid = false;
+            }
+            else if ('>'.CompareTo(i_playerMove[2]) != 0)
+            {
+                moveStringIsValid = false;
+            }
+            else if (!char.IsUpper(i_playerMove[3]) || (i_playerMove[3] >= 'A' + sizeBoard - 2))
+            {
+                moveStringIsValid = false;
+            }
+            else if (!char.IsLower(i_playerMove[4]) || (i_playerMove[4] >= 'a' + sizeBoard - 2))
+            {
+                moveStringIsValid = false;
+            }
+            return moveStringIsValid;
+        
+        }
     }
 }
