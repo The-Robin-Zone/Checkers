@@ -3,7 +3,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Logic
     {
-        public static bool MoveIsValid(GameBoard gameBoard, string location)
+        public static bool MoveIsValid(GameBoard gameBoard, string location, Player player)
         {
             bool o_typeMove = true;
             int xStartingPoint = location[0] - 'A' + 1;
@@ -24,11 +24,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             else
             {
 
-                if (!IsSimpleMove('0', yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
+                if (!IsSimpleMove(player.Color, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
                 {
                     o_typeMove = !o_typeMove;
                 }
-                else if (IsJump(gameBoard, '0', yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
+                else if (IsJump(gameBoard, player.Color, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
                 {
                     o_typeMove = !o_typeMove;
                 }
