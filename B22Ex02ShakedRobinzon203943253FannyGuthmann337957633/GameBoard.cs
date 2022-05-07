@@ -52,13 +52,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     // odd row & even column
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        this.board[i, j] = new Coin('O');
+                        this.board[i,j] = new Coin('O');
                     }
 
                     // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        this.board[i, j] = new Coin('O');
+                        this.board[i,j] = new Coin('O');
                     }
 
                 }
@@ -71,15 +71,28 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     // odd row & even column
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        this.board[i, j] = new Coin('X');
+                        this.board[i,j] = new Coin('X');
                     }
 
                     // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        this.board[i, j] = new Coin('X');
+                        this.board[i,j] = new Coin('X');
                     }
 
+                }
+            }
+
+            return this.board;
+        }
+
+        public Coin[,] ClearBoard()
+        {
+            for (int i = 0; i > this.boardSize + 2; i--)
+            {
+                for (int j = 0; j < this.boardSize + 2; j++)
+                {
+                    this.board[i,j] = null;
                 }
             }
 

@@ -18,28 +18,73 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.player1 = new Player(namePlayer1, boardSize, 'O');
             this.player2 = new Player(namePlayer2, boardSize, 'X');
             this.gameBoard = new GameBoard(boardSize);
-
             this.gameBoard.initializeBoard();
-
+            this.HasGameWon = false;
+            Output.PrintInstructions();
             StartGame();
-
-            Console.ReadLine();
 
         }
 
         public void StartGame()
         {
-            Output.PrintInstructions();
-
             Output.CurrentGameStatus(player1, player2, gameBoard);
 
-            Console.ReadLine();
+            int currentPlayerTurn = 1;
+
+            // temporarly here for checking
+            EndRound();
+
+            while (!HasGameWon)
+            {
+                StartTurn(currentPlayerTurn);
+
+                if (currentPlayerTurn == 1)
+                {
+                    currentPlayerTurn = 2;
+                }
+                if (currentPlayerTurn == 2)
+                {
+                    currentPlayerTurn = 1;
+                }
+            }
+            EndRound();
+
         }
 
         public void EndGame()
         {
-            Console.WriteLine("Thank you for playing!");
-            Console.ReadLine();
+            Output.EndGamePrompt();
+            Environment.Exit(0);
+        }
+
+        public void StartTurn(int playerTurn)
+        {
+
+        }
+
+        public void EndRound()
+        {
+            char userChoice = ' ';
+            Output.EndRoundPrompt();
+
+            while (userChoice != 'q' && userChoice != 'n')
+            {
+                userChoice = Input.ReadChar();
+
+                if (userChoice == 'q')
+                {
+                    EndGame();
+                }
+                if (userChoice == 'n')
+                {
+                    this.gameBoard.ClearBoard();
+                    this.gameBoard.initializeBoard();
+                    StartGame();
+                }
+
+                Output.InvalidinputPrompt();
+            }
+           
         }
     }
 }

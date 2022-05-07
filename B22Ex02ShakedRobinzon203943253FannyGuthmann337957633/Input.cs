@@ -85,5 +85,29 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
             return intBoardSize;
         }
+
+        public static char ReadChar()
+        {
+            bool isInputCorrect = true;
+            string userInput;
+            char userOutput = ' ';
+
+            while (isInputCorrect)
+            {
+                userInput = Console.ReadLine();
+
+                if (userInput.Length == 1)
+                {
+                    isInputCorrect = false;
+                    userOutput = userInput[0];
+                }
+                else
+                {
+                    Output.InvalidinputPrompt();
+                }
+            }
+            
+            return userOutput;
+        }
     }
 }
