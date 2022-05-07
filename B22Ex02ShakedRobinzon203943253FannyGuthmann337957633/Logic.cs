@@ -12,7 +12,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             int yEndingPoint = location[4] - 'a' + 1;
 
             // Check starting point is not empty and is the rigth color
-            if (MoveIsInbound(gameBoard, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
+            if (MoveIsInbound(gameBoard, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
             {
                 o_typeMove = false;
 
@@ -22,7 +22,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 o_typeMove = false;
                 // Check destination tile to be free
             }
-            else if (!SquareIsFree(gameBoard, xEndingPoint, yEndingPoint))
+            else if (!SquareIsFree(gameBoard, yEndingPoint, xEndingPoint))
             {
                 o_typeMove = false;
             }
