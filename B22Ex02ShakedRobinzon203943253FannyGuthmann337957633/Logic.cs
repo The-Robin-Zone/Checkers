@@ -6,34 +6,34 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static bool MoveIsValid(GameBoard gameBoard, string location, Player player)
         {
             bool o_typeMove = true;
-            int xStartingPoint = location[0] - 'A' + 1;
-            int yStartingPoint = location[1] - 'a' + 1;
-            int xEndingPoint = location[3] - 'A' + 1;
-            int yEndingPoint = location[4] - 'a' + 1;
+            int xStartingPoint = location[1] - 'A' + 1;
+            int yStartingPoint = location[0] - 'a' + 1;
+            int xEndingPoint = location[4] - 'A' + 1;
+            int yEndingPoint = location[3] - 'a' + 1;
 
             // Check starting point is not empty and is the rigth color
-            if (MoveIsInbound(gameBoard, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
+            if (MoveIsInbound(gameBoard, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
             {
                 o_typeMove = false;
 
             }
-            else if (SquareIsFree(gameBoard, yStartingPoint, xStartingPoint))
+            else if (SquareIsFree(gameBoard, xStartingPoint, yStartingPoint))
             {
                 o_typeMove = false;
                 // Check destination tile to be free
             }
-            else if (!SquareIsFree(gameBoard, yEndingPoint, xEndingPoint))
+            else if (!SquareIsFree(gameBoard, xEndingPoint, yEndingPoint))
             {
                 o_typeMove = false;
             }
             else
             {
 
-                if (!IsSimpleMove(player.Color, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
+                if (!IsSimpleMove(player.Color, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
                 {
                     o_typeMove = false;
                 }
-                else if (IsJump(gameBoard, player.Color, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
+                else if (IsJump(gameBoard, player.Color, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
                 {
                     o_typeMove = false;
                 }
