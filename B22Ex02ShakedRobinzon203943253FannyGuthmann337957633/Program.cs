@@ -6,8 +6,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static void Main()
         {
             //initializeGame();
-            Coin[,] gameBoard = initializeBoard(10);
-            Output.Print2DArray(gameBoard,10);
+            GameBoard gameBoard = new GameBoard(10);
+            gameBoard.initializeBoard();
+            Output.Print2DArray(gameBoard);
             Console.ReadLine();
             
         }
@@ -27,54 +28,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         }
 
-        public static Coin[,] initializeBoard(int i_boardSize)
-        {
-            int numOfCoinRows = (i_boardSize / 2) - 1;
-            // add 2 rows and 2 colums for padding
-            i_boardSize = i_boardSize + 2;
-
-            Coin[,] gameBoard = new Coin[i_boardSize, i_boardSize];
-
-            //initialize O Coins
-            for (int i = 1; i < numOfCoinRows + 1; i++)
-            {
-                for (int j = 1; j < i_boardSize - 1; j++)
-                {
-                    // odd row & even column
-                    if (i % 2 != 0 && j % 2 == 0)
-                    {
-                        gameBoard[i, j] = new Coin('O');
-                    }
-
-                    // even row & odd column
-                    if (i % 2 == 0 && j % 2 != 0)
-                    { 
-                        gameBoard[i, j] = new Coin('O');
-                    }
-
-                }
-            }
-            //initialize X Coins
-            for (int i = i_boardSize - 2; i > numOfCoinRows + 2; i--)
-            {
-                for (int j = 1; j < i_boardSize - 1; j++)
-                {
-                    // odd row & even column
-                    if (i % 2 != 0 && j % 2 == 0)
-                    {
-                        gameBoard[i, j] = new Coin('X');
-                    }
-
-                    // even row & odd column
-                    if (i % 2 == 0 && j % 2 != 0)
-                    {
-                        gameBoard[i, j] = new Coin('X');
-                    }
-
-                }
-            }
-
-            return gameBoard;
-        }
+        
     }
 }
