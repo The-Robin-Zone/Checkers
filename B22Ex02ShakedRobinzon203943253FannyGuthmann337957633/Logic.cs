@@ -6,13 +6,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static bool MoveIsValid(GameBoard gameBoard, string location, Player player)
         {
             bool o_typeMove = true;
-            int xStartingPoint = location[1] - 'A' + 1;
-            int yStartingPoint = location[0] - 'a' + 1;
-            int xEndingPoint = location[4] - 'A' + 1;
-            int yEndingPoint = location[3] - 'a' + 1;
+            int xStartingPoint = location[1] - 'a' + 1;
+            int yStartingPoint = location[0] - 'A' + 1;
+            int xEndingPoint = location[4] - 'a' + 1;
+            int yEndingPoint = location[3] - 'A' + 1;
 
             // Check starting point is not empty and is the rigth color
-            if (MoveIsInbound(gameBoard, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
+            if (!MoveIsInbound(gameBoard, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
             {
                 o_typeMove = false;
 

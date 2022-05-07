@@ -32,16 +32,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             Output.CurrentGameStatus(player1, player2, gameBoard);
 
-            //int currentPlayerTurn = 1;
-            
-            //EndRound(); // temporarly here for checking - delete after checking
-
-            // Need to add case if you get another turn after captureing
-
             while (!HasGameWon)
             {
                 StartTurn(player1);
+                Output.Print2DArray(gameBoard);
                 StartTurn(player2);
+                Output.Print2DArray(gameBoard);
             }
             EndRound();
 
@@ -55,20 +51,42 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public void StartTurn(Player CurrPlayerTurn)
         {
-            bool isMoveIllegal = true;
+            string PlayerMove = string.Empty;
+            bool isMoveSyntaxIllegal = true;
+            bool isMoveLogicIllegal = true;
+            bool isMoveJump = true;
 
-            while (isMoveIllegal)
+            // Checks that move is syntactically & logically legal
+            while (isMoveSyntaxIllegal && isMoveLogicIllegal)
             {
-                string PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
-                isMoveIllegal = !Input.IsMoveLegal(PlayerMove, this.gameBoard.BoardSize);
+                PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
+                isMoveSyntaxIllegal = !Input.IsMoveLegal(PlayerMove);
+                isMoveLogicIllegal = !Logic.MoveIsValid(this.gameBoard, PlayerMove, CurrPlayerTurn);
 
-                if( isMoveIllegal == true)
+                if (isMoveSyntaxIllegal && isMoveLogicIllegal)
                 {
                     Output.InvalidinputPrompt();
-                }
-                
+                } 
             }
 
+
+            // Calculates starting and end tiles for the current move
+            int xStart = PlayerMove[1] - 'a' + 1;
+            int yStart = PlayerMove[0] - 'A' + 1;
+            int xEnd = PlayerMove[4] - 'a' + 1;
+            int yEnd = PlayerMove[3] - 'A' + 1;
+
+            // Move Coin
+            this.gameBoard.Board[xEnd,yEnd] = this.gameBoard.Board[xStart,yStart];
+            this.gameBoard.Board[xStart, yStart] = null;
+
+            // Checks if jump
+            isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
+
+            if (isMoveJump)
+            {
+                this.gameBoard.Board[(xStart + xEnd)/2, (yStart + yEnd)/2] = null;
+            }
         }
 
         public void EndRound()

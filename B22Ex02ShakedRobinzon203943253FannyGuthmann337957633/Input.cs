@@ -112,12 +112,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public static string ReadMoveString(Player currPlayerTurn)
         {
-            Console.WriteLine(currPlayerTurn.PlayerName + "'s turn (" + (char)currPlayerTurn.Color + "): ");
+            Console.WriteLine(currPlayerTurn.PlayerName + "'s turn (" + currPlayerTurn.Color + "): ");
             string i_playerMove = Console.ReadLine();
+            Console.WriteLine();
             return i_playerMove;
         }
 
-        public static bool IsMoveLegal(string i_playerMove,int sizeBoard)
+        public static bool IsMoveLegal(string i_playerMove)
         {
             bool moveStringIsValid = true;
 
@@ -125,11 +126,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 moveStringIsValid = false;
             }
-            else if (!char.IsUpper(i_playerMove[0]) || (i_playerMove[0] >= ('A' + sizeBoard - 2)))
+            else if (!char.IsUpper(i_playerMove[0]))
             {
                 moveStringIsValid = false;
             }
-            else if (!char.IsLower(i_playerMove[1]) || (i_playerMove[1] >= ('a' + sizeBoard - 2)))
+            else if (!char.IsLower(i_playerMove[1]))
             {
                 moveStringIsValid = false;
             }
@@ -137,11 +138,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 moveStringIsValid = false;
             }
-            else if (!char.IsUpper(i_playerMove[3]) || (i_playerMove[3] >= 'A' + sizeBoard - 2))
+            else if (!char.IsUpper(i_playerMove[3]))
             {
                 moveStringIsValid = false;
             }
-            else if (!char.IsLower(i_playerMove[4]) || (i_playerMove[4] >= 'a' + sizeBoard - 2))
+            else if (!char.IsLower(i_playerMove[4]))
             {
                 moveStringIsValid = false;
             }

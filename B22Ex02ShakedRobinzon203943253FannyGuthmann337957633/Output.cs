@@ -35,7 +35,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     if (boardGame.Board[i,j] != null)
                     {
-                        Console.Write("| " + (char)boardGame.Board[i, j].CoinColor + " ");
+                        Console.Write("| " + boardGame.Board[i, j].CoinColor + " ");
                     }
                     else
                     {
@@ -78,12 +78,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine("Player 1:");
             Console.WriteLine("Name: " + player1.PlayerName);
             Console.WriteLine("Score: " + player1.Score);
-            Console.WriteLine("Color: " + (char)player1.Color);
+            Console.WriteLine("Color: " + player1.Color);
             Console.WriteLine("");
             Console.WriteLine("Player 2:");
             Console.WriteLine("Name: " + player2.PlayerName);
             Console.WriteLine("Score: " + player2.Score);
-            Console.WriteLine("Color: " + (char)player2.Color);
+            Console.WriteLine("Color: " + player2.Color);
             Console.WriteLine("");
             Console.WriteLine("Game Board:");
             Console.WriteLine("");
