@@ -12,25 +12,30 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             int yEndingPoint = location[4] - 'a' + 1;
 
             // Check starting point is not empty and is the rigth color
-            if (SquareIsFree(gameBoard, yStartingPoint, xStartingPoint))
+            if (MoveIsInbound(gameBoard, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
             {
-                o_typeMove = !o_typeMove;
+                o_typeMove = false;
+
+            }
+            else if (SquareIsFree(gameBoard, yStartingPoint, xStartingPoint))
+            {
+                o_typeMove = false;
                 // Check destination tile to be free
             }
             else if (!SquareIsFree(gameBoard, xEndingPoint, yEndingPoint))
             {
-                o_typeMove = !o_typeMove;
+                o_typeMove = false;
             }
             else
             {
 
                 if (!IsSimpleMove(player.Color, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
                 {
-                    o_typeMove = !o_typeMove;
+                    o_typeMove = false;
                 }
                 else if (IsJump(gameBoard, player.Color, yStartingPoint, xStartingPoint, yEndingPoint, xEndingPoint))
                 {
-                    o_typeMove = !o_typeMove;
+                    o_typeMove = false;
                 }
             }
             return o_typeMove;
@@ -45,7 +50,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             if (gameBoard.Board[xPoint, yPoint] == null ||
             gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo(playerColor) == 0)
             {
-                o_coinExistAtLocation = !o_coinExistAtLocation;
+                o_coinExistAtLocation = false;
             }
             return o_coinExistAtLocation;
         }
@@ -58,7 +63,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
             if (gameBoard.Board[xPoint, yPoint] != null)
             {
-                o_coinDestinationIsFree = !o_coinDestinationIsFree;
+                o_coinDestinationIsFree = false;
             }
 
             return o_coinDestinationIsFree;
@@ -76,20 +81,20 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     if (yEndingPoint < yStartingPoint)
                     {
-                        isSimpleMove = !isSimpleMove;
+                        isSimpleMove = false;
                     }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
                     if (yEndingPoint > yStartingPoint)
                     {
-                        isSimpleMove = !isSimpleMove;
+                        isSimpleMove = false;
                     }
                 }
             }
             else
             {
-                isSimpleMove = !isSimpleMove;
+                isSimpleMove = false;
             }
             return isSimpleMove;
         }
@@ -107,28 +112,28 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     if (yEndingPoint > yStartingPoint)
                     {
-                        isJump = !isJump;
+                        isJump = false;
                     }
                     else if (!CoinExistAtLocation(gameBoard, xMidllePoint, yMidllePoint, playerColor))
                     {
-                        isJump = !isJump;
+                        isJump = false;
                     }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
                     if (yEndingPoint < yStartingPoint)
                     {
-                        isJump = !isJump;
+                        isJump = false;
                     }
                     else if (!CoinExistAtLocation(gameBoard, xMidllePoint, yMidllePoint, playerColor))
                     {
-                        isJump = !isJump;
+                        isJump = false;
                     }
                 }
             }
             else
             {
-                isJump = !isJump;
+                isJump = false;
             }
             return isJump;
         }
@@ -145,13 +150,38 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         (CoinExistAtLocation(gameBoard, i + 1, j + 1, playerColor)
                         || CoinExistAtLocation(gameBoard, i - 1, j + 1, playerColor)))
                     {
-                        noOpponentToEat = !noOpponentToEat;
+                        noOpponentToEat = false;
                         goto end;
                     }
                 }
             }
             end:
             return noOpponentToEat;
+        }
+
+        public static bool MoveIsInbound(GameBoard gameBoard, int xStartingPoint,
+            int yStartingPoint, int xEndingPoint, int yEndingPoint)
+        {
+            bool moveIsInBound = true;
+
+            if (xStartingPoint>= 'A' + gameBoard.BoardSize - 2)
+            {
+                moveIsInBound = false;
+            }
+            else if (yStartingPoint >= 'a' + gameBoard.BoardSize - 2)
+            {
+                moveIsInBound = false;
+            }
+            else if (xEndingPoint >= 'A' + gameBoard.BoardSize - 2)
+            {
+                moveIsInBound = false;
+            }
+            else if (yEndingPoint >= 'a' + gameBoard.BoardSize - 2)
+            {
+                moveIsInBound = false;
+            }
+            return moveIsInBound;
+
         }
 
 
