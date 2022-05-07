@@ -5,75 +5,85 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
     {
         public static int numberOfPlayers()
         {
-            Boolean validNumberEnter = false;
-            int o_numberOfPlayers = 1;
+            bool validNumberEnter = true;
+            int intNumOfPlayers = 0;
+            string i_numOfPlayers;
             Console.WriteLine("Welcome to Checkers!");
-            while (!validNumberEnter)
+
+            while (validNumberEnter)
             { 
                 Console.WriteLine("Please choose number of players: 1/2");
-                o_numberOfPlayers = int.Parse(Console.ReadLine());
-                if (o_numberOfPlayers == 2)
+               
+                i_numOfPlayers = Console.ReadLine();
+                int.TryParse(i_numOfPlayers, out intNumOfPlayers);
+
+                if (intNumOfPlayers == 1)
                 {
                     Console.WriteLine("Not supported yet");
                     
                 }
-                else if (o_numberOfPlayers == 1)
+                else if (intNumOfPlayers == 2)
                 {
-                    validNumberEnter = true;
+                    validNumberEnter = false;
                 } else
                 {
                     Console.WriteLine("The number you entered is not valid");
                 }
             }
-            return o_numberOfPlayers;
+            return intNumOfPlayers;
         }
 
-        public static int boardSize()
+        public static string getPlayerName(int i_playerNum)
         {
-            Boolean validNumberEnter = false;
-            int o_boardSize = 0;
-            while (!validNumberEnter)
-            {
-                Console.WriteLine("Please choose board size: 6/8/10");
-                o_boardSize = int.Parse(Console.ReadLine());
-                if (o_boardSize != 6 && o_boardSize != 8 && o_boardSize != 10)
-                {
-                    Console.WriteLine("The size you entered is not correct");
-                }
-                else
-                {
-                    validNumberEnter = true;
-                }
-            }
-            return o_boardSize;
-        }
-
-        public static string getPlayerName()
-        {
-            Boolean validString = false;
+            bool validString = true;
             string playerName = "";
-            while (!validString) { 
-                Console.WriteLine("Please enter your name");
+
+            while (validString)
+            {
+                Console.WriteLine("Please enter player's " + i_playerNum + " name");
                 playerName = Console.ReadLine();
+
                 if (playerName.Contains(" ") || String.IsNullOrEmpty(playerName))
                 {
                     Console.WriteLine("Please enter a name without spaces");
-                } else if (playerName.Length > 10)
+                }
+                else if (playerName.Length > 10)
                 {
                     Console.WriteLine("Please enter a name with less than 10 " +
                         "characters");
                 }
                 else
                 {
-                    validString = true;
+                    validString = false;
                 }
             }
             return playerName;
         }
 
-        //public static string nextMove(string i_move)
-        //{
-            
-        //}
+        public static int boardSize()
+        {
+            bool validNumberEnter = true;
+            int intBoardSize = 0;
+            string i_boardSize;
+
+            while (validNumberEnter)
+            {
+                Console.WriteLine("Please choose board size: 6/8/10");
+
+                i_boardSize = Console.ReadLine();
+
+                int.TryParse(i_boardSize, out intBoardSize);
+
+                if (intBoardSize != 6 && intBoardSize != 8 && intBoardSize != 10)
+                {
+                    Console.WriteLine("The size you entered is not correct");
+                }
+                else
+                {
+                    validNumberEnter = false;
+                }
+            }
+            return intBoardSize;
+        }
     }
 }

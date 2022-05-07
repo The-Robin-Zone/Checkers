@@ -8,13 +8,15 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         private string playerName;
         private int score;
         private int numberCoinsLeft;
+        private char coinColor;
 
         // Player object constructor 
-        public Player(string i_playerName, int i_boardSize)
+        public Player(string i_playerName, int i_boardSize ,char i_coinColor)
         {
             this.playerName = i_playerName;
             this.score = 0;
-            this.numberCoinsLeft = ((i_boardSize - 2) * i_boardSize) / 2;
+            this.numberCoinsLeft = ((i_boardSize - 2) * i_boardSize) / 4;
+            this.coinColor = i_coinColor;
         }
 
         public string PlayerName
