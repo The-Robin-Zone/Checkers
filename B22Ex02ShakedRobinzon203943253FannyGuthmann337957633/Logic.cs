@@ -199,7 +199,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         }
 
                     }
-
                 }
             }
         end:
@@ -259,10 +258,64 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         }
 
+        // Check if another jump is possible
+        public static bool IsJumpAvalaible(GameBoard gameBoard, char playerColor, int xPoint, int yPoint)
+        {
+            bool o_isJumpAvailable = false;
+            // Check if the coin is a king
+            bool isKing = gameBoard.Board[xPoint, yPoint].IsKing;
+            bool isX = true;
+            // Check the color of the coin
+            if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo('O') == 0)
+            {
+                isX = false;
+            }
+            // If the element is a king enter the two if and check 4 options if not check the only two option available for it
+            if (isKing || isX)
+            {
+                if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint - 2)
+                    || IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint + 2))
+                {
+                    o_isJumpAvailable = true;
+                }
+            }
+            if (isKing || !isX)
+            {
+                if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint + 2, yPoint - 2)
+                    || IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint + 2, yPoint + 2))
+                {
+                    o_isJumpAvailable = true;
+                }
+            }
+            return o_isJumpAvailable;
+        }
 
+        // Check if pawn become king
+        public static bool ShouldTurnKing(GameBoard gameBoard, int xPoint, int yPoint)
+        {
+            bool o_shouldTurnKing = true;
+            // Check if already king
+            if (gameBoard.Board[xPoint, yPoint].IsKing)
+            {
+                o_shouldTurnKing = false;
+                // Check if color O is go to the last row
+            } else if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo('O') == 0)
+            {
+                if (xPoint != gameBoard.BoardSize - 2)
+                {
+                    o_shouldTurnKing = false;
+                }
+                // Check if color X is go to the first row
+            }
+            else
+            {
+                if (xPoint != 1)
+                {
+                    o_shouldTurnKing = false;
+                }
+            }
+            return o_shouldTurnKing;
+        }
     }
-
-
-
 }
 

@@ -116,7 +116,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 // ADD - check if you can eat again than gives you another turn -
                 //make sure that next move is with the same coin!!!!
 
-                //isJumpAvailable(this.gameBoard, int x, int y)
+                //isJumpAvailable(this.gameBoard, this.CurrPlayerTurn.Color, int x, int y)
                 //
 
 
