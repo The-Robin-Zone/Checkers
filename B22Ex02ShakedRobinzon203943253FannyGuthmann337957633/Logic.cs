@@ -6,36 +6,36 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static bool MoveIsValid(GameBoard gameBoard, string location, Player player)
         {
             bool o_typeMove = true;
-            int xStartingPoint = location[1] - 'a' + 1;
-            int yStartingPoint = location[0] - 'A' + 1;
-            int xEndingPoint = location[4] - 'a' + 1;
-            int yEndingPoint = location[3] - 'A' + 1;
+
+            int xStart = location[1] - 'a' + 1;
+            int yStart = location[0] - 'A' + 1;
+            int xEnd = location[4] - 'a' + 1;
+            int yEnd = location[3] - 'A' + 1;
 
             // Check starting point is not empty and is the rigth color
-            if (!MoveIsInbound(gameBoard, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
+            if (!MoveIsInbound(gameBoard, xStart, yStart, xEnd, yEnd))
             {
                 o_typeMove = false;
-
             }
-            else if (SquareIsFree(gameBoard, xStartingPoint, yStartingPoint))
+            else if (SquareIsFree(gameBoard, xStart, yStart))
             {
                 o_typeMove = false;
                 // Check destination tile to be free
             }
-            else if (!SquareIsFree(gameBoard, xEndingPoint, yEndingPoint))
+            else if (!SquareIsFree(gameBoard, xEnd, yEnd))
             {
                 o_typeMove = false;
             }
             else
             {
-
-                if (!IsSimpleMove(player.Color, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
+                o_typeMove = false;
+                if (IsSimpleMove(player.Color, xStart, yStart, xEnd, yEnd))
                 {
-                    o_typeMove = false;
+                    o_typeMove = true;
                 }
-                else if (IsJump(gameBoard, player.Color, xStartingPoint, yStartingPoint, xEndingPoint, yEndingPoint))
+                else if (IsJump(gameBoard, player.Color, xStart, yStart, xEnd, yEnd))
                 {
-                    o_typeMove = false;
+                    o_typeMove = true;
                 }
             }
             return o_typeMove;
@@ -70,23 +70,22 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         }
 
 
-        public static bool IsSimpleMove(char playerColor, int xStartingPoint,
-            int yStartingPoint, int xEndingPoint, int yEndingPoint)
+        public static bool IsSimpleMove(char playerColor, int xStart,
+            int yStart, int xEnd, int yEnd)
         {
             bool isSimpleMove = true;
-            if (Math.Abs(xEndingPoint - xStartingPoint) == 1 &&
-                Math.Abs(yEndingPoint - yStartingPoint) == 1)
+            if (Math.Abs(xEnd - xStart) == 1 && Math.Abs(yEnd - yStart) == 1)
             {
                 if (playerColor.CompareTo('O') == 0)
                 {
-                    if (yEndingPoint < yStartingPoint)
+                    if (yEnd < yStart)
                     {
                         isSimpleMove = false;
                     }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
-                    if (yEndingPoint > yStartingPoint)
+                    if (yEnd > yStart)
                     {
                         isSimpleMove = false;
                     }
@@ -99,33 +98,32 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return isSimpleMove;
         }
 
-        public static bool IsJump(GameBoard gameBoard, char playerColor, int xStartingPoint,
-            int yStartingPoint, int xEndingPoint, int yEndingPoint)
+        public static bool IsJump(GameBoard gameBoard, char playerColor, int xStart,
+            int yStart, int xEnd, int yEnd)
         {
             bool isJump = true;
-            if (Math.Abs(xEndingPoint - xStartingPoint) == 2 &&
-                Math.Abs(yEndingPoint - xStartingPoint) == 2)
+            if (Math.Abs(xEnd - xStart) == 2 && Math.Abs(yEnd - yStart) == 2)
             {
-                int xMidllePoint = (xStartingPoint + xEndingPoint) / 2;
-                int yMidllePoint = (yStartingPoint + yEndingPoint) / 2;
+                int xMidlle = (xStart + xEnd) / 2;
+                int yMidlle = (yStart + yEnd) / 2;
                 if (playerColor.CompareTo('O') == 0)
                 {
-                    if (yEndingPoint > yStartingPoint)
+                    if (yEnd < yStart)
                     {
                         isJump = false;
                     }
-                    else if (!CoinExistAtLocation(gameBoard, xMidllePoint, yMidllePoint, playerColor))
+                    else if (!CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                     {
                         isJump = false;
                     }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
-                    if (yEndingPoint < yStartingPoint)
+                    if (yEnd > yStart)
                     {
                         isJump = false;
                     }
-                    else if (!CoinExistAtLocation(gameBoard, xMidllePoint, yMidllePoint, playerColor))
+                    else if (!CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                     {
                         isJump = false;
                     }
@@ -155,28 +153,28 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
-            end:
+        end:
             return noOpponentToEat;
         }
 
-        public static bool MoveIsInbound(GameBoard gameBoard, int xStartingPoint,
-            int yStartingPoint, int xEndingPoint, int yEndingPoint)
+        public static bool MoveIsInbound(GameBoard gameBoard, int xStart,
+            int yStart, int xEnd, int yEnd)
         {
             bool moveIsInBound = true;
 
-            if (xStartingPoint>= 'A' + gameBoard.BoardSize - 2)
+            if (xStart > gameBoard.BoardSize - 2)
             {
                 moveIsInBound = false;
             }
-            else if (yStartingPoint >= 'a' + gameBoard.BoardSize - 2)
+            else if (yStart > gameBoard.BoardSize - 2)
             {
                 moveIsInBound = false;
             }
-            else if (xEndingPoint >= 'A' + gameBoard.BoardSize - 2)
+            else if (xEnd > gameBoard.BoardSize - 2)
             {
                 moveIsInBound = false;
             }
-            else if (yEndingPoint >= 'a' + gameBoard.BoardSize - 2)
+            else if (yEnd > gameBoard.BoardSize - 2)
             {
                 moveIsInBound = false;
             }
