@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Logic
@@ -149,7 +150,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return isJump;
         }
 
-
+        // Check if the player can eat an opponent
         public static bool NoOpponentToEat(GameBoard gameBoard, char playerColor)
         {
             bool noOpponentToEat = true;
@@ -165,27 +166,38 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     if (tileOccupiedByRightColor(gameBoard, i, j, opponentColor))
                     {
+
+                        // Check if element need to go up or down
+                        int xPoint = i + 1;
+                        int xEndJump = i + 2;
                         if (playerColor.CompareTo('X') == 0)
                         {
-                            
-                            // If color is X need to go down
-                            if (tileOccupiedByRightColor(gameBoard, i - 1, j + 1, playerColor) ||
-                               tileOccupiedByRightColor(gameBoard, i - 1, j - 1, playerColor))
-                            {
-                                noOpponentToEat = false;
-                                goto end;
-                            }
+                            xPoint = i - 1;
+                            xEndJump = i - 2;
                         }
-                        else
+                        
+                        // Check if can eat one of his neighbor going to the right side
+                        if (tileOccupiedByRightColor(gameBoard, xPoint, j + 1, playerColor) &&
+                            !coinIsAtBorderOfBoard(gameBoard, xPoint, j + 1))
                         {
-                            // If color is O need to go up
-                            if (tileOccupiedByRightColor(gameBoard, i + 1, j + 1, playerColor) ||
-                                tileOccupiedByRightColor(gameBoard, i + 1, j - 1, playerColor))
+                            if (IsJump(gameBoard, playerColor, i, j, xEndJump, j + 2))
+                            {
+                                noOpponentToEat = false;
+                                goto end;
+                            }
+
+                        }
+                        // Check if can eat one of his neighbor going to the left side
+                        if (tileOccupiedByRightColor(gameBoard, xPoint, j - 1, playerColor) &&
+                          !coinIsAtBorderOfBoard(gameBoard, xPoint, j - 1))
+                        {
+                            if (IsJump(gameBoard, playerColor, i, j, xEndJump, j - 2))
                             {
                                 noOpponentToEat = false;
                                 goto end;
                             }
                         }
+
                     }
 
                 }
@@ -194,7 +206,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return noOpponentToEat;
         }
 
-
+        // Check if the tile is occupied by the given color
         private static bool tileOccupiedByRightColor(GameBoard gameBoard, int xPoint, int yPoint, char playerColor)
         {
             bool tileIsnotEmptyAndOccupyByRightColor = true;
@@ -209,6 +221,17 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return tileIsnotEmptyAndOccupyByRightColor;
         }
 
+        // Check if the coin is at one of the extremity of the board
+        private static bool coinIsAtBorderOfBoard(GameBoard gameBoard, int xPoint, int yPoint)
+        {
+            bool coinIsAtBorderOfBoard = false;
+            if ((xPoint <= 1) || (yPoint <= 1) || (xPoint >= (gameBoard.BoardSize - 2)) || (yPoint >= (gameBoard.BoardSize - 2)))
+            {
+                coinIsAtBorderOfBoard = true;
+            }
+
+            return coinIsAtBorderOfBoard;
+        }
 
         // Check that the move are in the bound of board game 
         public static bool MoveIsInbound(GameBoard gameBoard, int xStart,
