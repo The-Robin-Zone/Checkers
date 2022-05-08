@@ -12,27 +12,41 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             int xEnd = location[4] - 'a' + 1;
             int yEnd = location[3] - 'A' + 1;
 
-            // Check starting point is not empty and is the rigth color
+            // Check move is in bound of the board
             if (!MoveIsInbound(gameBoard, xStart, yStart, xEnd, yEnd))
             {
                 o_typeMove = false;
             }
-            else if (SquareIsFree(gameBoard, xStart, yStart))
+            // Check if element exist in tile
+            else if (IsTileFree(gameBoard, xStart, yStart))
             {
                 o_typeMove = false;
-                // Check destination tile to be free
             }
-            else if (!SquareIsFree(gameBoard, xEnd, yEnd))
+            // Check that the player is moving is color
+            else if (!CoinExistAtLocation(gameBoard, xStart, yStart, player.Color))
+            {
+                o_typeMove = false;
+            }
+            // Check destination tile to be free
+            else if (!IsTileFree(gameBoard, xEnd, yEnd))
             {
                 o_typeMove = false;
             }
             else
             {
+                // Player move is not check
                 o_typeMove = false;
+                // Check that player is doing a simple move
                 if (IsSimpleMove(player.Color, xStart, yStart, xEnd, yEnd))
                 {
                     o_typeMove = true;
+                    // Check if the player could have do a jump
+                    if (!NoOpponentToEat(gameBoard, player.Color))
+                    {
+                        o_typeMove = false;
+                    }
                 }
+                // Check if the player is doing jump
                 else if (IsJump(gameBoard, player.Color, xStart, yStart, xEnd, yEnd))
                 {
                     o_typeMove = true;
@@ -41,22 +55,21 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return o_typeMove;
         }
 
-
+        // Check if a coin exist at the location of the right color
         public static bool CoinExistAtLocation(GameBoard gameBoard,
             int xPoint, int yPoint, char playerColor)
         {
             bool o_coinExistAtLocation = true;
 
-            if (gameBoard.Board[xPoint, yPoint] == null ||
-            gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo(playerColor) == 0)
+            if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo(playerColor) != 0)
             {
                 o_coinExistAtLocation = false;
             }
             return o_coinExistAtLocation;
         }
 
-
-        public static bool SquareIsFree(GameBoard gameBoard,
+        // Check if the square is empty
+        public static bool IsTileFree(GameBoard gameBoard,
             int xPoint, int yPoint)
         {
             bool o_coinDestinationIsFree = true;
@@ -69,7 +82,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return o_coinDestinationIsFree;
         }
 
-
+        // Check that the move is a simple legal move
         public static bool IsSimpleMove(char playerColor, int xStart,
             int yStart, int xEnd, int yEnd)
         {
@@ -98,6 +111,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return isSimpleMove;
         }
 
+        // Check if the move is a jump legal
         public static bool IsJump(GameBoard gameBoard, char playerColor, int xStart,
             int yStart, int xEnd, int yEnd)
         {
@@ -112,10 +126,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         isJump = false;
                     }
-                    else if (!CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
-                    {
-                        isJump = false;
-                    }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
@@ -123,10 +133,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         isJump = false;
                     }
-                    else if (!CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
-                    {
-                        isJump = false;
-                    }
+                }
+                if (IsTileFree(gameBoard, xMidlle, yMidlle) ||
+                    !CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
+                {
+                    isJump = false;
                 }
             }
             else
@@ -136,27 +147,67 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return isJump;
         }
 
-
+        // Check if the player could do a jump instead of a simple move
         public static bool NoOpponentToEat(GameBoard gameBoard, char playerColor)
         {
             bool noOpponentToEat = true;
+            // Determine the opponent color 
+            char opponentColor = 'O';
+            if (playerColor.CompareTo('O') == 0)
+            {
+                opponentColor = 'X';
+            }
             for (int i = 1; i < gameBoard.BoardSize - 1; i++)
             {
                 for (int j = 1; j < gameBoard.BoardSize - 1; j++)
                 {
-                    if (CoinExistAtLocation(gameBoard, i, j, playerColor) &&
-                        (CoinExistAtLocation(gameBoard, i + 1, j + 1, playerColor)
-                        || CoinExistAtLocation(gameBoard, i - 1, j + 1, playerColor)))
+                    if (tileOccupiedByRightColor(gameBoard, i, j, opponentColor))
                     {
-                        noOpponentToEat = false;
-                        goto end;
+                        if (playerColor.CompareTo('X') == 0)
+                        {
+                            // If color is X need to go down
+                            if (tileOccupiedByRightColor(gameBoard, i - 1, j + 1, playerColor) ||
+                               tileOccupiedByRightColor(gameBoard, i - 1, j - 1, playerColor))
+                            {
+                                noOpponentToEat = false;
+                                goto end;
+                            }
+                        }
+                        else
+                        {
+                            // If color is O need to go up
+                            if (tileOccupiedByRightColor(gameBoard, i + 1, j + 1, playerColor) ||
+                                tileOccupiedByRightColor(gameBoard, i + 1, j - 1, playerColor))
+                            {
+                                noOpponentToEat = false;
+                                goto end;
+                            }
+                        }
                     }
+
                 }
             }
         end:
             return noOpponentToEat;
         }
 
+        // Check if tile is not empty and if doesn't contain the color of the player
+        private static bool tileOccupiedByRightColor(GameBoard gameBoard, int xPoint, int yPoint, char playerColor)
+        {
+            bool tileIsnotEmptyAndOccupyByRightColor = true;
+            if (IsTileFree(gameBoard, xPoint, yPoint))
+            {
+                tileIsnotEmptyAndOccupyByRightColor = false;
+            }
+            else if (CoinExistAtLocation(gameBoard, xPoint, yPoint, playerColor))
+            {
+                tileIsnotEmptyAndOccupyByRightColor = false;
+            }
+            return tileIsnotEmptyAndOccupyByRightColor;
+        }
+
+
+        // Check that the move are in the bound of board game 
         public static bool MoveIsInbound(GameBoard gameBoard, int xStart,
             int yStart, int xEnd, int yEnd)
         {
@@ -179,13 +230,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 moveIsInBound = false;
             }
             return moveIsInBound;
-
         }
-
-
     }
-
-
-
 }
 
