@@ -22,7 +22,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_typeMove = false;
             }
-            // Check that the player is moving is color
             else if (!CoinExistAtLocation(gameBoard, xStart, yStart, player.Color))
             {
                 o_typeMove = false;
@@ -40,7 +39,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 if (IsSimpleMove(player.Color, xStart, yStart, xEnd, yEnd))
                 {
                     o_typeMove = true;
-                    // Check if the player could have do a jump
                     if (!NoOpponentToEat(gameBoard, player.Color))
                     {
                         o_typeMove = false;
@@ -134,8 +132,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         isJump = false;
                     }
                 }
-                if (IsTileFree(gameBoard, xMidlle, yMidlle) ||
-                    !CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
+                if (IsTileFree(gameBoard, xMidlle, yMidlle) || !CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                 {
                     isJump = false;
                 }
@@ -147,16 +144,16 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return isJump;
         }
 
-        // Check if the player could do a jump instead of a simple move
+
         public static bool NoOpponentToEat(GameBoard gameBoard, char playerColor)
         {
             bool noOpponentToEat = true;
-            // Determine the opponent color 
             char opponentColor = 'O';
             if (playerColor.CompareTo('O') == 0)
             {
                 opponentColor = 'X';
             }
+
             for (int i = 1; i < gameBoard.BoardSize - 1; i++)
             {
                 for (int j = 1; j < gameBoard.BoardSize - 1; j++)
@@ -191,7 +188,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return noOpponentToEat;
         }
 
-        // Check if tile is not empty and if doesn't contain the color of the player
+
         private static bool tileOccupiedByRightColor(GameBoard gameBoard, int xPoint, int yPoint, char playerColor)
         {
             bool tileIsnotEmptyAndOccupyByRightColor = true;
@@ -230,7 +227,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 moveIsInBound = false;
             }
             return moveIsInBound;
+
         }
+
+
     }
+
+
+
 }
 
