@@ -24,7 +24,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.hasRoundEnded = false;
             this.isRoundDraw = false;
             Output.PrintInstructions();
-            // ADD - function that prints move structure - promt it upon illegal input
+            Output.MoveSyntaxPrompt();
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
             StartGame();
@@ -34,24 +34,25 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public void StartGame()
         {
             Output.CurrentGameStatus(player1, player2, gameBoard);
+            Output.MoveSyntaxPrompt();
 
             while (!hasRoundEnded)
             {
                 //Ex02.ConsoleUtils.Screen.Clear();
                 Console.WriteLine("Screen was cleared");
-                StartTurn(player1);
+                StartTurn(player1, player2);
                 Output.Print2DArray(gameBoard);
 
                 //Ex02.ConsoleUtils.Screen.Clear();
                 Console.WriteLine("Screen was cleared");
-                StartTurn(player2);
+                StartTurn(player2, player1);
                 Output.Print2DArray(gameBoard);
             }
             EndRound();
 
         }
 
-        public void StartTurn(Player CurrPlayerTurn)
+        public void StartTurn(Player CurrPlayerTurn, Player currEnemyPlayer)
         {
             string PlayerMove = string.Empty;
             bool isMoveSyntaxIllegal = true;
@@ -73,6 +74,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 if (isMoveSyntaxIllegal || isMoveLogicIllegal)
                 {
                     Output.InvalidinputPrompt();
+                    Output.MoveSyntaxPrompt();
                 } 
             }
 
@@ -86,29 +88,61 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.gameBoard.Board[xEnd,yEnd] = this.gameBoard.Board[xStart,yStart];
             this.gameBoard.Board[xStart, yStart] = null;
 
-            // Checks if move is jump and deletes caputed coin
-
+            // This block handels jump moves
             isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
-
-
+            
             if (isMoveJump)
             {
+                bool wasKingCaptured = this.gameBoard.Board[(xStart + xEnd) / 2, (yStart + yEnd) / 2].IsKing;
                 this.gameBoard.Board[(xStart + xEnd)/2, (yStart + yEnd)/2] = null;
-                // ADD - need to update amount of coins left and check which type of coin was captured
-                // ADD - check if you can eat again than gives you another turn
-                // ADD - check if you the amount of coins otherr player has, if zero than currnt player won
+
+                // Updates enemy player Coin count
+                if (wasKingCaptured == true)
+                {
+                    currEnemyPlayer.NumberKingsLeft--;
+                }
+                else
+                {
+                    currEnemyPlayer.NumberPawnsLeft--;
+                }
+
+                // Check enemy's amount of coins, if none left current player wins
+                if (currEnemyPlayer.NumberPawnsLeft == 0 && currEnemyPlayer.NumberKingsLeft == 0)
+                {
+                    this.hasRoundEnded = true;
+                    EndRound();
+                }
+
+                // ADD - check if you can eat again than gives you another turn -
+                //make sure that next move is with the same coin!!!!
+
+                //isJumpAvailable(this.gameBoard, int x, int y)
+                //
+
+
+
             }
 
             // ADD - check for draw - if yes end round
+
+            //isDraw(this.gameBoard)
+
+
             // ADD - check if coin should be king at end of turn
 
+            //ShouldTurnKing(this.gameBoard, int x, int y)
+
+
+
+            //Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine("Screen was cleared");
         }
 
         public void EndRound()
         {
             char userChoice = ' ';
 
-                // ADD - score calculation if someone won
+                // Score calculation if round didn't end with a draw
                 if (this.isRoundDraw == false)
                 {
                     int player1score = player1.NumberPawnsLeft + (player1.NumberKingsLeft * 4);

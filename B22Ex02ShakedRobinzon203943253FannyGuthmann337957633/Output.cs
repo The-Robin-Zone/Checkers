@@ -116,6 +116,13 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine("Please enter a valid input");
         }
 
+        public static void MoveSyntaxPrompt()
+        {
+            Console.WriteLine("A Move should be in the following format: COLrow>COLrow");
+            Console.WriteLine("for example: Af>Be");
+            Console.WriteLine();
+        }
+
         public static void EndGamePrompt()
         {
             Console.WriteLine("Thank you for playing!");
