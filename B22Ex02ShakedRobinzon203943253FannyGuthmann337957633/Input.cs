@@ -122,7 +122,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             bool moveStringIsValid = true;
 
-            if (i_playerMove.Length != 5)
+            if (i_playerMove.Length != 5 || String.Equals(i_playerMove, string.Empty))
             {
                 moveStringIsValid = false;
             }

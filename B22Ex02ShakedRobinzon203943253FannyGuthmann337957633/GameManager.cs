@@ -24,6 +24,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.hasRoundEnded = false;
             this.isRoundDraw = false;
             Output.PrintInstructions();
+            // ADD - function that prints move structure - promt it upon illegal input
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
             StartGame();
@@ -55,17 +56,21 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             string PlayerMove = string.Empty;
             bool isMoveSyntaxIllegal = true;
             bool isMoveLogicIllegal = true;
-            bool isMoveJump = true;
+            bool isMoveJump = false;
 
             // Checks that move is syntactically & logically legal
-            // ADD - logic test that you are capturing if you must.
-            while (isMoveSyntaxIllegal && isMoveLogicIllegal)
+            // ADD - logic test that you are capturing if you must. - check
+            while (isMoveSyntaxIllegal || isMoveLogicIllegal)
             {
                 PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
                 isMoveSyntaxIllegal = !Input.IsMoveLegal(PlayerMove);
-                isMoveLogicIllegal = !Logic.MoveIsValid(this.gameBoard, PlayerMove, CurrPlayerTurn);
+                if (!isMoveSyntaxIllegal)
+                {
+                    isMoveLogicIllegal = !Logic.MoveIsValid(this.gameBoard, PlayerMove, CurrPlayerTurn);
+                }
+                
 
-                if (isMoveSyntaxIllegal && isMoveLogicIllegal)
+                if (isMoveSyntaxIllegal || isMoveLogicIllegal)
                 {
                     Output.InvalidinputPrompt();
                 } 
@@ -82,12 +87,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.gameBoard.Board[xStart, yStart] = null;
 
             // Checks if move is jump and deletes caputed coin
+
             isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
+
 
             if (isMoveJump)
             {
                 this.gameBoard.Board[(xStart + xEnd)/2, (yStart + yEnd)/2] = null;
-                // ADD - need to update amount of coins left
+                // ADD - need to update amount of coins left and check which type of coin was captured
                 // ADD - check if you can eat again than gives you another turn
                 // ADD - check if you the amount of coins otherr player has, if zero than currnt player won
             }
@@ -123,7 +130,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     Output.EndRoundPrompt("Nobody");
                 }
 
-            while (userChoice != 'q' && userChoice != 'n')
+            while (userChoice != 'q' || userChoice != 'n')
             {
                 userChoice = Input.ReadChar();
 
@@ -131,15 +138,18 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     EndGame();
                 }
-                if (userChoice == 'n')
+                else if (userChoice == 'n')
                 {
                     this.gameBoard.ClearBoard();
                     this.gameBoard.initializeBoard();
                     this.hasRoundEnded = false;
                     StartGame();
                 }
+                else
+                {
+                    Output.InvalidinputPrompt();
+                }
 
-                Output.InvalidinputPrompt();
             }
            
         }
@@ -148,11 +158,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             Output.EndGamePrompt();
             Environment.Exit(0);
-        }
-
-        public static void ScoreCalculator()
-        {
-
         }
     }
 }

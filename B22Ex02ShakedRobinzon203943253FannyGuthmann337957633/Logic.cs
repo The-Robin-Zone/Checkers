@@ -89,14 +89,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 if (playerColor.CompareTo('O') == 0)
                 {
-                    if (yEnd < yStart)
+                    if (xEnd < xStart)
                     {
                         isSimpleMove = false;
                     }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
-                    if (yEnd > yStart)
+                    if (xEnd > xStart)
                     {
                         isSimpleMove = false;
                     }
@@ -120,22 +120,27 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 int yMidlle = (yStart + yEnd) / 2;
                 if (playerColor.CompareTo('O') == 0)
                 {
-                    if (yEnd < yStart)
+                    if (xEnd < xStart)
+                    {
+                        isJump = false;
+                    } else if (IsTileFree(gameBoard, xMidlle, yMidlle) ||
+                        CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                     {
                         isJump = false;
                     }
                 }
                 else if (playerColor.CompareTo('X') == 0)
                 {
-                    if (yEnd > yStart)
+                    if (xEnd > xStart)
+                    {
+                        isJump = false;
+                    } else if (IsTileFree(gameBoard, xMidlle, yMidlle) ||
+                        CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                     {
                         isJump = false;
                     }
                 }
-                if (IsTileFree(gameBoard, xMidlle, yMidlle) || !CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
-                {
-                    isJump = false;
-                }
+                
             }
             else
             {
@@ -162,6 +167,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         if (playerColor.CompareTo('X') == 0)
                         {
+                            
                             // If color is X need to go down
                             if (tileOccupiedByRightColor(gameBoard, i - 1, j + 1, playerColor) ||
                                tileOccupiedByRightColor(gameBoard, i - 1, j - 1, playerColor))
