@@ -4,15 +4,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
     public class Coin
     {
         private char coinColor;  //  black/white (O/X)
-        private string coinType; //  pawn/king
-        private string location; // location on board
-
-        // Coin object constructor 
+        private bool isKing;     //  pawn/king
+       
         public Coin(char i_coinColor)
         {
             this.coinColor = i_coinColor;
-            this.coinType = "pawn";
-            this.location = null;
+            this.isKing = false;
         }
 
         public char CoinColor
@@ -28,31 +25,17 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
         }
 
-        public string CoinType
+        public bool CoinType
         {
             set
             {
-                this.coinType = value;
+                this.isKing = value;
             }
             get
 
             {
-                return this.coinType;
+                return this.isKing;
             }
         }
-
-        public string Location
-        {
-            set
-            {
-                this.location = value;
-            }
-            get
-
-            {
-                return this.location;
-            }
-        }
-
     }
 }

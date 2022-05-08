@@ -100,6 +100,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
 
             // ADD - check for draw - if yes end round
+            // ADD - check if coin should be king at end of turn
 
         }
 
