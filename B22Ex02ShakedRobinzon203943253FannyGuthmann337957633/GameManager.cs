@@ -1,5 +1,4 @@
 ﻿using System;
-//using Ex02.ConsoleUtils;
 
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
@@ -8,7 +7,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         private Player player1;
         private Player player2;
         private GameBoard gameBoard;
-        private bool HasGameWon;
+        private bool hasRoundEnded;
+        private bool isRoundDraw;
 
         public void InitializeGame()
         {
@@ -21,9 +21,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.player2 = new Player(namePlayer2, boardSize, 'X');
             this.gameBoard = new GameBoard(boardSize);
             this.gameBoard.initializeBoard();
-            this.HasGameWon = false;
+            this.hasRoundEnded = false;
+            this.isRoundDraw = false;
             Output.PrintInstructions();
             //Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine("Screen was cleared");
             StartGame();
 
         }
@@ -32,21 +34,20 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             Output.CurrentGameStatus(player1, player2, gameBoard);
 
-            while (!HasGameWon)
+            while (!hasRoundEnded)
             {
+                //Ex02.ConsoleUtils.Screen.Clear();
+                Console.WriteLine("Screen was cleared");
                 StartTurn(player1);
                 Output.Print2DArray(gameBoard);
+
+                //Ex02.ConsoleUtils.Screen.Clear();
+                Console.WriteLine("Screen was cleared");
                 StartTurn(player2);
                 Output.Print2DArray(gameBoard);
             }
             EndRound();
 
-        }
-
-        public void EndGame()
-        {
-            Output.EndGamePrompt();
-            Environment.Exit(0);
         }
 
         public void StartTurn(Player CurrPlayerTurn)
@@ -57,6 +58,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             bool isMoveJump = true;
 
             // Checks that move is syntactically & logically legal
+            // ADD - logic test that you are capturing if you must.
             while (isMoveSyntaxIllegal && isMoveLogicIllegal)
             {
                 PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
@@ -69,7 +71,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 } 
             }
 
-
             // Calculates starting and end tiles for the current move
             int xStart = PlayerMove[1] - 'a' + 1;
             int yStart = PlayerMove[0] - 'A' + 1;
@@ -80,19 +81,47 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.gameBoard.Board[xEnd,yEnd] = this.gameBoard.Board[xStart,yStart];
             this.gameBoard.Board[xStart, yStart] = null;
 
-            // Checks if jump
+            // Checks if move is jump and deletes caputed coin
             isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
 
             if (isMoveJump)
             {
                 this.gameBoard.Board[(xStart + xEnd)/2, (yStart + yEnd)/2] = null;
+                // ADD - need to update amount of coins left
+                // ADD - check if you can eat again than gives you another turn
+                // ADD - check if you the amount of coins otherr player has, if zero than currnt player won
             }
+
+            // ADD - check for draw - if yes end round
+
         }
 
         public void EndRound()
         {
             char userChoice = ' ';
-            Output.EndRoundPrompt();
+
+                // ADD - score calculation if someone won
+                if (this.isRoundDraw == false)
+                {
+                    int player1score = player1.NumberPawnsLeft + (player1.NumberKingsLeft * 4);
+                    int player2score = player2.NumberPawnsLeft + (player2.NumberKingsLeft * 4);
+
+                    if (player1score > player2score)
+                    {
+                        player1.Score = player1score - player2score;
+                        Output.EndRoundPrompt(player1.PlayerName);
+                    }
+
+                    if (player1score < player2score)
+                    {
+                        player2.Score = player2score - player1score;
+                        Output.EndRoundPrompt(player2.PlayerName);
+                    }
+                }
+                else
+                {
+                    Output.EndRoundPrompt("Nobody");
+                }
 
             while (userChoice != 'q' && userChoice != 'n')
             {
@@ -106,12 +135,24 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     this.gameBoard.ClearBoard();
                     this.gameBoard.initializeBoard();
+                    this.hasRoundEnded = false;
                     StartGame();
                 }
 
                 Output.InvalidinputPrompt();
             }
            
+        }
+
+        public void EndGame()
+        {
+            Output.EndGamePrompt();
+            Environment.Exit(0);
+        }
+
+        public static void ScoreCalculator()
+        {
+
         }
     }
 }

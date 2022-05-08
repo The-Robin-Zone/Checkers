@@ -122,9 +122,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.ReadLine();
         }
 
-        public static void EndRoundPrompt()
+        public static void EndRoundPrompt(string winnerName)
         {
             Console.WriteLine("Game has ended!");
+            Console.WriteLine(winnerName + " won!");
             Console.WriteLine("Press 'q' to quit or 'n' for new game:");
         }
     }
