@@ -146,6 +146,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 moveStringIsValid = false;
             }
+            else if (String.Equals(i_playerMove, "q"))
+            {
+               // exit game?
+            }
             return moveStringIsValid;
         
         }

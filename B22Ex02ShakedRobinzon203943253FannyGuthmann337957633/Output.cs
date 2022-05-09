@@ -122,6 +122,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine();
             Console.WriteLine("A Move should be in the following format: COLrow>COLrow");
             Console.WriteLine("for example: Af>Be");
+            Console.WriteLine("You can enter q to exit");
             Console.WriteLine();
         }
 
