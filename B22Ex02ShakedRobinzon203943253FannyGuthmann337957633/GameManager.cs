@@ -24,7 +24,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.hasRoundEnded = false;
             this.isRoundDraw = false;
             Output.PrintInstructions();
-            Output.MoveSyntaxPrompt();
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
             StartGame();
@@ -54,30 +53,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public void StartTurn(Player CurrPlayerTurn, Player currEnemyPlayer)
         {
-            string PlayerMove = string.Empty;
-            bool isMoveSyntaxIllegal = true;
-            bool isMoveLogicIllegal = true;
             bool isMoveJump = false;
 
-            // Checks that move is syntactically & logically legal
-            // ADD - logic test that you are capturing if you must. - check
-            while (isMoveSyntaxIllegal || isMoveLogicIllegal)
-            {
-                PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
-                isMoveSyntaxIllegal = !Input.IsMoveLegal(PlayerMove);
-                if (!isMoveSyntaxIllegal)
-                {
-                    isMoveLogicIllegal = !Logic.MoveIsValid(this.gameBoard, PlayerMove, CurrPlayerTurn);
-                }
-                
-
-                if (isMoveSyntaxIllegal || isMoveLogicIllegal)
-                {
-                    Output.InvalidinputPrompt();
-                    Output.MoveSyntaxPrompt();
-                } 
-            }
-
+            string PlayerMove = GetPlayerMove(CurrPlayerTurn);
+            
             // Calculates starting and end tiles for the current move
             int xStart = PlayerMove[1] - 'a' + 1;
             int yStart = PlayerMove[0] - 'A' + 1;
@@ -88,54 +67,103 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.gameBoard.Board[xEnd,yEnd] = this.gameBoard.Board[xStart,yStart];
             this.gameBoard.Board[xStart, yStart] = null;
 
+            // Turn coin to king if needed
+            if (Logic.ShouldTurnKing(this.gameBoard, xEnd, yEnd))
+            {
+                this.gameBoard.Board[xEnd, yEnd].IsKing = true;
+
+                if (this.gameBoard.Board[xEnd,yEnd].CoinColor == 'O')
+                {
+                    this.gameBoard.Board[xEnd,yEnd].CoinColor = 'Q';
+                }
+                if (this.gameBoard.Board[xEnd,yEnd].CoinColor == 'X')
+                {
+                    this.gameBoard.Board[xEnd,yEnd].CoinColor = 'Z';
+                }
+            }
+
             // This block handels jump moves
             isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
             
             if (isMoveJump)
             {
-                bool wasKingCaptured = this.gameBoard.Board[(xStart + xEnd) / 2, (yStart + yEnd) / 2].IsKing;
-                this.gameBoard.Board[(xStart + xEnd)/2, (yStart + yEnd)/2] = null;
-
-                // Updates enemy player Coin count
-                if (wasKingCaptured == true)
-                {
-                    currEnemyPlayer.NumberKingsLeft--;
-                }
-                else
-                {
-                    currEnemyPlayer.NumberPawnsLeft--;
-                }
-
-                // Check enemy's amount of coins, if none left current player wins
-                if (currEnemyPlayer.NumberPawnsLeft == 0 && currEnemyPlayer.NumberKingsLeft == 0)
-                {
-                    this.hasRoundEnded = true;
-                    EndRound();
-                }
-
-                // ADD - check if you can eat again than gives you another turn -
-                //make sure that next move is with the same coin!!!!
-
-                //isJumpAvailable(this.gameBoard, this.CurrPlayerTurn.Color, int x, int y)
-                //
-
-
-
+                MakeCoinCapture(CurrPlayerTurn, currEnemyPlayer, xStart, yStart, xEnd, yEnd);
             }
 
-            // ADD - check for draw - if yes end round
-
-            //isDraw(this.gameBoard)
-
-
-            // ADD - check if coin should be king at end of turn
-
-            //ShouldTurnKing(this.gameBoard, int x, int y)
-
-
+            //Check for draw before ending players turn
+            //if (Logic.isDraw(this.gameBoard))
+            //    {
+            //        this.hasRoundEnded = true;
+            //        this.isRoundDraw = true;
+            //        EndRound();
+            //    }
 
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
+        }
+
+        public void MakeCoinCapture(Player CurrPlayerTurn, Player currEnemyPlayer, int xStart, int yStart, int xEnd, int yEnd)
+        {
+            bool wasKingCaptured = this.gameBoard.Board[(xStart + xEnd) / 2, (yStart + yEnd) / 2].IsKing;
+            this.gameBoard.Board[(xStart + xEnd) / 2, (yStart + yEnd) / 2] = null;
+
+            // Updates enemy player Coin count
+            if (wasKingCaptured)
+            {
+                currEnemyPlayer.NumberKingsLeft--;
+            }
+            else
+            {
+                currEnemyPlayer.NumberPawnsLeft--;
+            }
+
+            // Check enemy's amount of coins, if none left current player wins
+            if (currEnemyPlayer.NumberPawnsLeft == 0 && currEnemyPlayer.NumberKingsLeft == 0)
+            {
+                this.hasRoundEnded = true;
+                EndRound();
+            }
+
+            // Check if another capture is possible
+            if (Logic.IsJumpAvalaible(this.gameBoard, CurrPlayerTurn.Color, xEnd, yEnd))
+            {
+                LimitedTurn(CurrPlayerTurn, currEnemyPlayer, xEnd, yEnd);
+            }
+        }
+
+        public void LimitedTurn(Player CurrPlayerTurn, Player currEnemyPlayer , int xActuallPoint, int yActuallPoint)
+        {
+            string playerLimitedMove = string.Empty;
+            bool isLimitedMoveIllegal = true;
+            int xStart = 0;
+            int yStart = 0;
+            int xEnd = 0;
+            int yEnd = 0;
+
+            Output.LimitedTurnPrompt();
+
+            while (isLimitedMoveIllegal)
+            {
+                playerLimitedMove = GetPlayerMove(CurrPlayerTurn);
+                xStart = playerLimitedMove[1] - 'a' + 1;
+                yStart = playerLimitedMove[0] - 'A' + 1;
+                xEnd = playerLimitedMove[4] - 'a' + 1;
+                yEnd = playerLimitedMove[3] - 'A' + 1;
+
+                if (xStart == xActuallPoint && yStart == yActuallPoint)
+                {
+                    isLimitedMoveIllegal = false;
+                }
+            }
+
+            //do actual capture
+            MakeCoinCapture(CurrPlayerTurn, currEnemyPlayer, xStart, yStart, xEnd, yEnd);
+
+            // Check if another capure is possible
+            if (Logic.IsJumpAvalaible(this.gameBoard, CurrPlayerTurn.Color, xEnd, yEnd))
+            {
+                LimitedTurn(CurrPlayerTurn, currEnemyPlayer, xEnd, yEnd);
+            }
         }
 
         public void EndRound()
@@ -184,9 +212,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     Output.InvalidinputPrompt();
                 }
-
             }
-           
         }
 
         public void EndGame()
@@ -194,5 +220,30 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Output.EndGamePrompt();
             Environment.Exit(0);
         }
+
+        public string GetPlayerMove(Player CurrPlayerTurn)
+        {
+            string PlayerMove = string.Empty;
+            bool isMoveSyntaxIllegal = true;
+            bool isMoveLogicIllegal = true;
+
+            // Checks that move is syntactically & logically legal
+            while (isMoveSyntaxIllegal || isMoveLogicIllegal)
+            {
+                PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
+                isMoveSyntaxIllegal = !Input.IsMoveLegal(PlayerMove);
+                if (!isMoveSyntaxIllegal)
+                {
+                    isMoveLogicIllegal = !Logic.MoveIsValid(this.gameBoard, PlayerMove, CurrPlayerTurn);
+                }
+
+                if (isMoveSyntaxIllegal || isMoveLogicIllegal)
+                {
+                    Output.InvalidinputPrompt();
+                    Output.MoveSyntaxPrompt();
+                }
+            }
+            return PlayerMove;
+        }   
     }
 }

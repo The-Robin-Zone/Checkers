@@ -74,7 +74,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static void CurrentGameStatus(Player player1, Player player2, GameBoard gameBoard)
         {
             Console.WriteLine("This is the current game status:");
-
+            Console.WriteLine();
             Console.WriteLine("Player 1:");
             Console.WriteLine("Name: " + player1.PlayerName);
             Console.WriteLine("Score: " + player1.Score);
@@ -107,17 +107,19 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine("8. Whenever a player is able to make a capture he must do so. \nWhen there is more than one way to jump, a player may choose any way he wishes, not necessarily the one which results in the capture of the greatest number of opposing units. \nHowever, once a player chooses asequence of captures, he must make all the captures possible in that sequence.");
             Console.WriteLine("");
             Console.WriteLine("Press any key to continue");
-            Console.WriteLine("");
             Console.ReadLine();
         }
 
         public static void InvalidinputPrompt()
         {
+            Console.WriteLine();
             Console.WriteLine("Please enter a valid input");
+            Console.WriteLine();
         }
 
         public static void MoveSyntaxPrompt()
         {
+            Console.WriteLine();
             Console.WriteLine("A Move should be in the following format: COLrow>COLrow");
             Console.WriteLine("for example: Af>Be");
             Console.WriteLine();
@@ -125,15 +127,25 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public static void EndGamePrompt()
         {
+            Console.WriteLine();
             Console.WriteLine("Thank you for playing!");
             Console.ReadLine();
         }
 
         public static void EndRoundPrompt(string winnerName)
         {
+            Console.WriteLine();
             Console.WriteLine("Game has ended!");
             Console.WriteLine(winnerName + " won!");
             Console.WriteLine("Press 'q' to quit or 'n' for new game:");
+            Console.WriteLine();
+        }
+
+        public static void LimitedTurnPrompt()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You must continue capturing! enter another move:");
+            Console.WriteLine();
         }
     }
 }
