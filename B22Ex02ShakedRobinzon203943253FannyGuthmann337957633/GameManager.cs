@@ -63,6 +63,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             int xEnd = PlayerMove[4] - 'a' + 1;
             int yEnd = PlayerMove[3] - 'A' + 1;
 
+            // Move to before making the move 
+            // This block handels jump moves
+            isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
+
             // Move Coin
             this.gameBoard.Board[xEnd,yEnd] = this.gameBoard.Board[xStart,yStart];
             this.gameBoard.Board[xStart, yStart] = null;
@@ -82,8 +86,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
             }
 
-            // This block handels jump moves
-            isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
+           
             
             if (isMoveJump)
             {
@@ -155,7 +158,25 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     isLimitedMoveIllegal = false;
                 }
             }
+            // I added this, I think we should put this in a function and called it here and in turn
+            // Move Coin
+            this.gameBoard.Board[xEnd, yEnd] = this.gameBoard.Board[xStart, yStart];
+            this.gameBoard.Board[xStart, yStart] = null;
 
+            // Turn coin to king if needed
+            if (Logic.ShouldTurnKing(this.gameBoard, xEnd, yEnd))
+            {
+                this.gameBoard.Board[xEnd, yEnd].IsKing = true;
+
+                if (this.gameBoard.Board[xEnd, yEnd].CoinColor == 'O')
+                {
+                    this.gameBoard.Board[xEnd, yEnd].CoinColor = 'Q';
+                }
+                if (this.gameBoard.Board[xEnd, yEnd].CoinColor == 'X')
+                {
+                    this.gameBoard.Board[xEnd, yEnd].CoinColor = 'Z';
+                }
+            }
             //do actual capture
             MakeCoinCapture(CurrPlayerTurn, currEnemyPlayer, xStart, yStart, xEnd, yEnd);
 
