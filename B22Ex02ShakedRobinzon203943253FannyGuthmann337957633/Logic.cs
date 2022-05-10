@@ -199,6 +199,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                         // Check if element need to go up or down
                         if (playerColor.CompareTo('X') == 0 || gameBoard.Board[i, j].IsKing)
+
                         {
                             if (isNeighborOccupyByOpponent(gameBoard, i, j, i - 2, j + 2, i - 1, j + 1,
                                 playerColor, opponentColor))
@@ -214,6 +215,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                             }
                         }
                         if (playerColor.CompareTo('O') == 0|| gameBoard.Board[i, j].IsKing)
+
                         {
                             if (isNeighborOccupyByOpponent(gameBoard, i, j, i + 2, j + 2, i + 1, j + 1,
                                 playerColor, opponentColor))
@@ -510,8 +512,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
             return o_isDraw;
         }
-
-        
     }
 }
 
