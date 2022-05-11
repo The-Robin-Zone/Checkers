@@ -119,8 +119,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (xEnd < xStart)
                     {
                         isSimpleMove = false;
-                    }
-                    else if (!IsTileFree(gameBoard, xEnd, yEnd))
+                    } else if (!IsTileFree(gameBoard, xEnd, yEnd))
                     {
                         isSimpleMove = false;
                     }
@@ -463,10 +462,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return o_allJumpAvailable;
         }
 
+        
 
-
-        // Check all possible single move possible, and return all of the
-        private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player)
+         // Check all possible single move possible, and return all of the
+         private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player)
         {
             ArrayList o_allSimpleMoveAvailable = new ArrayList();
 
