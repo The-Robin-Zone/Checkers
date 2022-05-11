@@ -140,5 +140,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine("Press any key to continue");
             Console.ReadLine();
         }
+
+        public static void MustCapturePromt()
+        {
+            Console.WriteLine();
+            Console.WriteLine("You must capture opponent Coin!");
+            Console.WriteLine();
+        }
     }
 }

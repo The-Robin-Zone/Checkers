@@ -47,9 +47,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
 
-            // ADD if no availble moves move to next players turn
-
-            while (!hasRoundEnded && true)
+            while (!hasRoundEnded)
             {
                 if (Logic.AllMovePossible(gameBoard,player1).Count != 0)
                 {
@@ -57,7 +55,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     StartTurn(player1, player2);
                 }
 
-                if (Logic.AllMovePossible(gameBoard,player1).Count != 0)
+                if (Logic.AllMovePossible(gameBoard,player2).Count != 0)
                 {
                     // if second player is human we also print board
                     if (numOfPlayers == 2)
@@ -115,12 +113,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
 
             //Check for draw before ending players turn
-            //if (Logic.IsDraw(this.gameBoard, CurrPlayerTurn)  && Logic.IsDraw(this.gameBoard, currEnemyPlayer))
-            //{
-            //    this.hasRoundEnded = true;
-            //    this.isRoundDraw = true;
-            //    EndRound();
-            //}
+            if (Logic.IsDraw(this.gameBoard, CurrPlayerTurn) && Logic.IsDraw(this.gameBoard, currEnemyPlayer))
+            {
+                this.hasRoundEnded = true;
+                this.isRoundDraw = true;
+                EndRound();
+            }
 
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
@@ -289,9 +287,15 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                 if (isMoveSyntaxIllegal || isMoveLogicIllegal)
                 {
-                    Output.InvalidInputPrompt();
+                    if (!Logic.NoOpponentToEat(this.gameBoard,CurrPlayerTurn.Color))
+                    {
+                        Output.MustCapturePromt();
+                    }
+                    else
+                    {
+                        Output.InvalidInputPrompt();
+                    }
                     Output.MoveSyntaxPrompt();
-                    // ADD - if statement - if must eat than print different prompt ask fanny which function to use
                 }
             }
             return PlayerMove;
