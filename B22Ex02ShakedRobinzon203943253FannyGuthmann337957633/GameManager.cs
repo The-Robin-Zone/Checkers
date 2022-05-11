@@ -47,7 +47,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
 
-            while (!hasRoundEnded)
+            // ADD if no availble moves move to next players turn
+
+            while (!hasRoundEnded && true)
             {
                 Output.Print2DArray(gameBoard);
                 StartTurn(player1, player2);
