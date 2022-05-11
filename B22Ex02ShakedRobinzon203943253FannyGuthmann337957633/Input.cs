@@ -17,15 +17,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 i_numOfPlayers = Console.ReadLine();
                 int.TryParse(i_numOfPlayers, out intNumOfPlayers);
 
-                if (intNumOfPlayers == 1)
-                {
-                    Console.WriteLine("Not supported yet");
-                    
-                }
-                else if (intNumOfPlayers == 2)
+
+                if (intNumOfPlayers == 2 || intNumOfPlayers == 1)
                 {
                     validNumberEnter = false;
-                } else
+                }
+                else
                 {
                     Console.WriteLine("The number you entered is not valid");
                 }
@@ -122,6 +119,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             bool moveStringIsValid = true;
 
+            if (String.Equals(i_playerMove, "q"))
+            {
+                GameManager.EndGame();
+            }
             if (i_playerMove.Length != 5 || String.Equals(i_playerMove, string.Empty))
             {
                 moveStringIsValid = false;
@@ -145,10 +146,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             else if (!char.IsLower(i_playerMove[4]))
             {
                 moveStringIsValid = false;
-            }
-            else if (String.Equals(i_playerMove, "q"))
-            {
-               // exit game?
             }
             return moveStringIsValid;
         

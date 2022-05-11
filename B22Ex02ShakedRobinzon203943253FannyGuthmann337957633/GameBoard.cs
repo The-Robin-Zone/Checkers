@@ -39,7 +39,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
         }
 
-        public Coin[,] initializeBoard()
+        public Coin[,] InitializeBoard()
         {
             int numOfCoinRows = ((this.boardSize - 2) / 2) - 1;
      
@@ -88,9 +88,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public Coin[,] ClearBoard()
         {
-            for (int i = 0; i > this.boardSize + 2; i--)
+            for (int i = 0; i < this.boardSize; i++)
             {
-                for (int j = 0; j < this.boardSize + 2; j++)
+                for (int j = 0; j < this.boardSize; j++)
                 {
                     this.board[i,j] = null;
                 }

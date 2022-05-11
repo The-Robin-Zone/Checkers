@@ -9,18 +9,25 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         private GameBoard gameBoard;
         private bool hasRoundEnded;
         private bool isRoundDraw;
+        private int numOfPlayers;
 
         public void InitializeGame()
         {
-            int numberOfPlayers = Input.numberOfPlayers();
-            string namePlayer1 = Input.getPlayerName(1);
-            string namePlayer2 = Input.getPlayerName(2);
+            numOfPlayers = Input.numberOfPlayers();
             int boardSize = Input.boardSize();
-
+            string namePlayer1 = Input.getPlayerName(1);
             this.player1 = new Player(namePlayer1, boardSize, 'O');
+
+            string namePlayer2 = "Computer";
+
+            if (numOfPlayers == 2)
+            {
+                namePlayer2 = Input.getPlayerName(2);
+            }
+
             this.player2 = new Player(namePlayer2, boardSize, 'X');
             this.gameBoard = new GameBoard(boardSize);
-            this.gameBoard.initializeBoard();
+            this.gameBoard.InitializeBoard();
             this.hasRoundEnded = false;
             this.isRoundDraw = false;
             Output.PrintInstructions();
@@ -32,20 +39,26 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public void StartGame()
         {
-            Output.CurrentGameStatus(player1, player2, gameBoard);
             Output.MoveSyntaxPrompt();
+            Output.CurrentGameStatus(player1, player2);
+            Output.Print2DArray(gameBoard);
+            Output.PressToContinue();
+
+            //Ex02.ConsoleUtils.Screen.Clear();
+            Console.WriteLine("Screen was cleared");
 
             while (!hasRoundEnded)
             {
-                //Ex02.ConsoleUtils.Screen.Clear();
-                Console.WriteLine("Screen was cleared");
+                Output.Print2DArray(gameBoard);
                 StartTurn(player1, player2);
-                Output.Print2DArray(gameBoard);
 
-                //Ex02.ConsoleUtils.Screen.Clear();
-                Console.WriteLine("Screen was cleared");
+                // if second player is human we also print board
+                if (numOfPlayers == 2)
+                {
+                    Output.Print2DArray(gameBoard);
+                }
+
                 StartTurn(player2, player1);
-                Output.Print2DArray(gameBoard);
             }
             EndRound();
 
@@ -54,52 +67,47 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public void StartTurn(Player CurrPlayerTurn, Player currEnemyPlayer)
         {
             bool isMoveJump = false;
+            string PlayerMove = String.Empty;
 
-            string PlayerMove = GetPlayerMove(CurrPlayerTurn);
-            
+            if (numOfPlayers == 1 && string.Equals(CurrPlayerTurn.PlayerName, "Computer"))
+            {
+                PlayerMove = Logic.NextMoveComputer(gameBoard, player2);
+            }
+            else
+            {
+                PlayerMove = GetPlayerMove(CurrPlayerTurn);
+            }
+
             // Calculates starting and end tiles for the current move
             int xStart = PlayerMove[1] - 'a' + 1;
             int yStart = PlayerMove[0] - 'A' + 1;
             int xEnd = PlayerMove[4] - 'a' + 1;
             int yEnd = PlayerMove[3] - 'A' + 1;
 
-            // Move to before making the move 
-            // This block handels jump moves
+            // Check if move is jump
             isMoveJump = Logic.IsJump(gameBoard, CurrPlayerTurn.Color, xStart, yStart, xEnd, yEnd);
 
             // Move Coin
-            this.gameBoard.Board[xEnd,yEnd] = this.gameBoard.Board[xStart,yStart];
-            this.gameBoard.Board[xStart, yStart] = null;
+            MoveCoin(xStart, yStart, xEnd, yEnd);
 
             // Turn coin to king if needed
             if (Logic.ShouldTurnKing(this.gameBoard, xEnd, yEnd))
             {
-                this.gameBoard.Board[xEnd, yEnd].IsKing = true;
-
-                if (this.gameBoard.Board[xEnd,yEnd].CoinColor == 'O')
-                {
-                    this.gameBoard.Board[xEnd,yEnd].CoinColor = 'Q';
-                }
-                if (this.gameBoard.Board[xEnd,yEnd].CoinColor == 'X')
-                {
-                    this.gameBoard.Board[xEnd,yEnd].CoinColor = 'Z';
-                }
+                TurnToKing(xEnd, yEnd);
             }
 
-           
-            
             if (isMoveJump)
             {
                 MakeCoinCapture(CurrPlayerTurn, currEnemyPlayer, xStart, yStart, xEnd, yEnd);
             }
 
             //Check for draw before ending players turn
-            //if (Logic.isDraw(this.gameBoard))
-            //    {
-            //        this.hasRoundEnded = true;
-            //        this.isRoundDraw = true;
-            //        EndRound();
-            //    }
+            //if (Logic.IsDraw(this.gameBoard, CurrPlayerTurn)  && Logic.IsDraw(this.gameBoard, currEnemyPlayer))
+            //{
+            //    this.hasRoundEnded = true;
+            //    this.isRoundDraw = true;
+            //    EndRound();
+            //}
 
             //Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
@@ -143,40 +151,45 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             int xEnd = 0;
             int yEnd = 0;
 
-            Output.LimitedTurnPrompt();
+            if (numOfPlayers == 2)
+            {
+                Output.LimitedTurnPrompt();
+                Output.Print2DArray(gameBoard);
+            }
+
 
             while (isLimitedMoveIllegal)
             {
-                playerLimitedMove = GetPlayerMove(CurrPlayerTurn);
-                xStart = playerLimitedMove[1] - 'a' + 1;
-                yStart = playerLimitedMove[0] - 'A' + 1;
-                xEnd = playerLimitedMove[4] - 'a' + 1;
-                yEnd = playerLimitedMove[3] - 'A' + 1;
+                if (numOfPlayers == 1 && string.Equals(CurrPlayerTurn.PlayerName, "Computer"))
+                {
+                    playerLimitedMove = Logic.NextMoveComputer(gameBoard, player2);
+                }
+                else
+                {
+                    playerLimitedMove = GetPlayerMove(CurrPlayerTurn);
+                }
+
+            xStart = playerLimitedMove[1] - 'a' + 1;
+            yStart = playerLimitedMove[0] - 'A' + 1;
+            xEnd = playerLimitedMove[4] - 'a' + 1;
+            yEnd = playerLimitedMove[3] - 'A' + 1;   
+
 
                 if (xStart == xActuallPoint && yStart == yActuallPoint)
                 {
                     isLimitedMoveIllegal = false;
                 }
             }
-            // I added this, I think we should put this in a function and called it here and in turn
+
             // Move Coin
-            this.gameBoard.Board[xEnd, yEnd] = this.gameBoard.Board[xStart, yStart];
-            this.gameBoard.Board[xStart, yStart] = null;
+            MoveCoin(xStart, yStart, xEnd, yEnd);
 
             // Turn coin to king if needed
             if (Logic.ShouldTurnKing(this.gameBoard, xEnd, yEnd))
             {
-                this.gameBoard.Board[xEnd, yEnd].IsKing = true;
-
-                if (this.gameBoard.Board[xEnd, yEnd].CoinColor == 'O')
-                {
-                    this.gameBoard.Board[xEnd, yEnd].CoinColor = 'Q';
-                }
-                if (this.gameBoard.Board[xEnd, yEnd].CoinColor == 'X')
-                {
-                    this.gameBoard.Board[xEnd, yEnd].CoinColor = 'Z';
-                }
+                TurnToKing(xEnd, yEnd);
             }
+
             //do actual capture
             MakeCoinCapture(CurrPlayerTurn, currEnemyPlayer, xStart, yStart, xEnd, yEnd);
 
@@ -200,12 +213,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (player1score > player2score)
                     {
                         player1.Score = player1score - player2score;
+                        Output.CurrentGameStatus(player1, player2);
                         Output.EndRoundPrompt(player1.PlayerName);
                     }
 
                     if (player1score < player2score)
                     {
                         player2.Score = player2score - player1score;
+                        Output.CurrentGameStatus(player1, player2);
                         Output.EndRoundPrompt(player2.PlayerName);
                     }
                 }
@@ -225,7 +240,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 else if (userChoice == 'n')
                 {
                     this.gameBoard.ClearBoard();
-                    this.gameBoard.initializeBoard();
+                    this.gameBoard.InitializeBoard();
                     this.hasRoundEnded = false;
                     StartGame();
                 }
@@ -236,7 +251,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
         }
 
-        public void EndGame()
+        public static void EndGame()
         {
             Output.EndGamePrompt();
             Environment.Exit(0);
@@ -251,6 +266,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             // Checks that move is syntactically & logically legal
             while (isMoveSyntaxIllegal || isMoveLogicIllegal)
             {
+
                 PlayerMove = Input.ReadMoveString(CurrPlayerTurn);
                 isMoveSyntaxIllegal = !Input.IsMoveLegal(PlayerMove);
                 if (!isMoveSyntaxIllegal)
@@ -262,9 +278,34 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     Output.InvalidinputPrompt();
                     Output.MoveSyntaxPrompt();
+                    // ADD - if statement - if must eat than print different prompt ask fanny which function to use
                 }
             }
             return PlayerMove;
-        }   
+        }
+
+        public void MoveCoin(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            this.gameBoard.Board[xEnd, yEnd] = this.gameBoard.Board[xStart, yStart];
+            this.gameBoard.Board[xStart, yStart] = null;
+        }
+
+        public void TurnToKing(int xEnd, int yEnd)
+        {
+            this.gameBoard.Board[xEnd, yEnd].IsKing = true;
+
+            if (this.gameBoard.Board[xEnd, yEnd].CoinColor == 'O')
+            {
+                this.gameBoard.Board[xEnd, yEnd].CoinColor = 'Q';
+                player1.NumberKingsLeft++;
+                player1.NumberPawnsLeft--;
+            }
+            if (this.gameBoard.Board[xEnd, yEnd].CoinColor == 'X')
+            {
+                this.gameBoard.Board[xEnd, yEnd].CoinColor = 'Z';
+                player2.NumberKingsLeft++;
+                player2.NumberPawnsLeft--;
+            }
+        }
     }
 }
