@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class GameBoard
@@ -42,36 +43,36 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             int numOfCoinRows = ((this.m_BoardSize - 2) / 2) - 1;
      
-            //initialize 'O' Coins
+            // Initialize 'O' Coins
             for (int i = 1; i < numOfCoinRows + 1; i++)
             {
                 for (int j = 1; j < this.m_BoardSize - 1; j++)
                 {
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        this.m_Board[i,j] = new Coin('O');
+                        this.m_Board[i, j] = new Coin('O');
                     }
 
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        this.m_Board[i,j] = new Coin('O');
+                        this.m_Board[i, j] = new Coin('O');
                     }
                 }
             }
 
-            //initialize X Coins
+            // Initialize X Coins
             for (int i = this.m_BoardSize - 2; i > numOfCoinRows + 2; i--)
             {
                 for (int j = 1; j < this.m_BoardSize - 1; j++)
                 {
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        this.m_Board[i,j] = new Coin('X');
+                        this.m_Board[i, j] = new Coin('X');
                     }
 
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        this.m_Board[i,j] = new Coin('X');
+                        this.m_Board[i, j] = new Coin('X');
                     }
                 }
             }
@@ -83,7 +84,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 for (int j = 0; j < this.m_BoardSize; j++)
                 {
-                    this.m_Board[i,j] = null;
+                    this.m_Board[i, j] = null;
                 }
             }
         }

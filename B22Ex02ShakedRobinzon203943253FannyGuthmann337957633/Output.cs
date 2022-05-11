@@ -1,9 +1,9 @@
 ﻿using System;
+
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Output
     {
-
         public static void Print2DArray(GameBoard i_BoardGame)
         {
             char columnPrint = 'A';
@@ -13,7 +13,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.Write("  ");
             for (int i = 0; i < i_BoardGame.BoardSize - 2; i++)
             {
-                Console.Write(" " + (char)(columnPrint+i) + "  ");
+                Console.Write(" " + (char)(columnPrint + i) + "  ");
             }
 
             Console.WriteLine();
@@ -21,13 +21,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
             for (int i = 1; i < i_BoardGame.BoardSize - 1; i++)
             {
-
                 // Print row index
                 Console.Write((char)(rowPrint + i - 1));
 
                 for (int j = 1; j < i_BoardGame.BoardSize - 1; j++)
                 {
-                    if (i_BoardGame.Board[i,j] != null)
+                    if (i_BoardGame.Board[i, j] != null)
                     {
                         Console.Write("| " + i_BoardGame.Board[i, j].CoinColor + " ");
                     }

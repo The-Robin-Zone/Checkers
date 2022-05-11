@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Coin
@@ -14,25 +15,27 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public char CoinColor
         {
-            set
-            {
-                this.m_CoinColor = value;
-            }
             get
             {
                 return this.m_CoinColor;
+            }
+
+            set
+            {
+                this.m_CoinColor = value;
             }
         }
 
         public bool IsKing
         {
-            set
-            {
-                this.m_IsKing = value;
-            }
             get
             {
                 return this.m_IsKing;
+            }
+
+            set
+            {
+                this.m_IsKing = value;
             }
         }
     }

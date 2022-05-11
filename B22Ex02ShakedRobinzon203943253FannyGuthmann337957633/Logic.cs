@@ -1,6 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
+
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Logic
@@ -18,17 +18,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_IsMoveValid = false;
             }
-            // Check if element exist in tile
             else if (IsTileFree(i_GameBoard, xStart, yStart))
             {
                 o_IsMoveValid = false;
             }
-            // Check if the tile is occupy by the right coin
             else if (!CoinExistAtLocation(i_GameBoard, xStart, yStart, i_CurrPlayer.Color))
             {
                 o_IsMoveValid = false;
             }
-            // Check destination tile to be free
             else if (!IsTileFree(i_GameBoard, xEnd, yEnd))
             {
                 o_IsMoveValid = false;
@@ -37,6 +34,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 // Player move is not check
                 o_IsMoveValid = false;
+
                 // Check that player is doing a simple move
                 if (IsSimpleMove(i_GameBoard, i_CurrPlayer.Color, xStart, yStart, xEnd, yEnd))
                 {
@@ -46,18 +44,17 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         o_IsMoveValid = false;
                     }
                 }
-                // Check if the player is doing jump
                 else if (IsJump(i_GameBoard, i_CurrPlayer.Color, xStart, yStart, xEnd, yEnd))
                 {
                     o_IsMoveValid = true;
                 }
             }
+
             return o_IsMoveValid;
         }
 
         // Check if a coin exist at the location of the right color
-        public static bool CoinExistAtLocation(GameBoard i_GameBoard,
-            int i_XPoint, int i_YPoint, char i_PlayerColor)
+        public static bool CoinExistAtLocation(GameBoard i_GameBoard, int i_XPoint, int i_YPoint, char i_PlayerColor)
         {
             bool o_CoinExistAtLocation = true;
 
@@ -74,12 +71,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_CoinExistAtLocation = false;
             }
+
             return o_CoinExistAtLocation;
         }
 
         // Check if the square is empty
-        public static bool IsTileFree(GameBoard i_GameBoard,
-            int i_XPoint, int i_YPoint)
+        public static bool IsTileFree(GameBoard i_GameBoard, int i_XPoint, int i_YPoint)
         {
             bool o_IsTileDestinationFree = true;
 
@@ -92,8 +89,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         }
 
         // Check if the tile is occupied by the given color
-        private static bool isTileOccupiedByRightColor(GameBoard i_GameBoard, int i_XPoint, int i_YPoint,
-            char i_PlayerColor)
+        private static bool isTileOccupiedByRightColor(GameBoard i_GameBoard, int i_XPoint, int i_YPoint, char i_PlayerColor)
         {
             bool o_IsTileOccupiedByRightColor = true;
 
@@ -105,12 +101,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_IsTileOccupiedByRightColor = false;
             }
+
             return o_IsTileOccupiedByRightColor;
         }
 
         // Check that the move is a simple legal move
-        public static bool IsSimpleMove(GameBoard i_GameBoard, char i_PlayerColor, int i_XStart,
-            int i_YStart, int i_XEnd, int i_YEnd)
+        public static bool IsSimpleMove(GameBoard i_GameBoard, char i_PlayerColor, int i_XStart, int i_YStart, int i_XEnd, int i_YEnd)
         {
             bool o_IsSimpleMove = true;
 
@@ -121,7 +117,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (i_XEnd < i_XStart)
                     {
                         o_IsSimpleMove = false;
-                    } else if (!IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
+                    }
+                    else if (!IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
                     {
                         o_IsSimpleMove = false;
                     }
@@ -142,12 +139,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_IsSimpleMove = false;
             }
+
             return o_IsSimpleMove;
         }
 
         // Check if the move is a jump legal
-        public static bool IsJump(GameBoard i_GameBoard, char i_PlayerColor, int i_XStart,
-            int i_YStart, int i_XEnd, int I_YEnd)
+        public static bool IsJump(GameBoard i_GameBoard, char i_PlayerColor, int i_XStart, int i_YStart, int i_XEnd, int I_YEnd)
         {
             bool o_IsJump = true;
 
@@ -166,9 +163,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         o_IsJump = false;
                     }
-                    else if (!IsTileFree(i_GameBoard, i_XEnd, I_YEnd)
-                      || IsTileFree(i_GameBoard, xMidlle, yMidlle) ||
-                      CoinExistAtLocation(i_GameBoard, xMidlle, yMidlle, i_PlayerColor))
+                    else if (!IsTileFree(i_GameBoard, i_XEnd, I_YEnd) || IsTileFree(i_GameBoard, xMidlle, yMidlle) || CoinExistAtLocation(i_GameBoard, xMidlle, yMidlle, i_PlayerColor))
                     {
                         o_IsJump = false;
                     }
@@ -179,9 +174,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         o_IsJump = false;
                     }
-                    else if (!IsTileFree(i_GameBoard, i_XEnd, I_YEnd)
-                      || IsTileFree(i_GameBoard, xMidlle, yMidlle) ||
-                      CoinExistAtLocation(i_GameBoard, xMidlle, yMidlle, i_PlayerColor))
+                    else if (!IsTileFree(i_GameBoard, i_XEnd, I_YEnd) || IsTileFree(i_GameBoard, xMidlle, yMidlle) || CoinExistAtLocation(i_GameBoard, xMidlle, yMidlle, i_PlayerColor))
                     {
                         o_IsJump = false;
                     }
@@ -191,6 +184,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_IsJump = false;
             }
+
             return o_IsJump;
         }
 
@@ -211,35 +205,31 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 {
                     if (isTileOccupiedByRightColor(i_GameBoard, i, j, i_PlayerColor))
                     {
-
                         // Check if element need to go up or down
                         if (i_PlayerColor.CompareTo('X') == 0 || i_GameBoard.Board[i, j].IsKing)
-
                         {
-                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i - 2, j + 2, i - 1, j + 1,
-                                i_PlayerColor, opponentColor))
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i - 2, j + 2, i - 1, j + 1, i_PlayerColor, opponentColor))
                             {
                                 o_NoOpponentToEat = false;
                                 goto end;
                             }
-                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i - 2, j - 2, i - 1, j - 1,
-                                i_PlayerColor, opponentColor))
+
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i - 2, j - 2, i - 1, j - 1, i_PlayerColor, opponentColor))
                             {
                                 o_NoOpponentToEat = false;
                                 goto end;
                             }
                         }
-                        if (i_PlayerColor.CompareTo('O') == 0 || i_GameBoard.Board[i, j].IsKing)
 
+                        if (i_PlayerColor.CompareTo('O') == 0 || i_GameBoard.Board[i, j].IsKing)
                         {
-                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i + 2, j + 2, i + 1, j + 1,
-                                i_PlayerColor, opponentColor))
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i + 2, j + 2, i + 1, j + 1, i_PlayerColor, opponentColor))
                             {
                                 o_NoOpponentToEat = false;
                                 goto end;
                             }
-                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i + 2, j - 2, i + 1, j - 1,
-                                i_PlayerColor, opponentColor))
+
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i + 2, j - 2, i + 1, j - 1, i_PlayerColor, opponentColor))
                             {
                                 o_NoOpponentToEat = false;
                                 goto end;
@@ -248,19 +238,17 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
+
         end:
             return o_NoOpponentToEat;
         }
 
         // Check if the neighbor of the coin is occupied by opponent
-        private static bool isNeighborOccupyByOpponent(GameBoard i_GameBoard, int i_XStart, int i_YStart,
-            int i_XEnd, int i_YEnd, int i_XMiddle, int i_YMiddle, char i_PlayerColor, char i_OpponentColor)
+        private static bool isNeighborOccupyByOpponent(GameBoard i_GameBoard, int i_XStart, int i_YStart, int i_XEnd, int i_YEnd, int i_XMiddle, int i_YMiddle, char i_PlayerColor, char i_OpponentColor)
         {
             bool o_IsNeighborOccupyByOpponent = true;
 
-            if (isTileOccupiedByRightColor(i_GameBoard, i_XMiddle, i_YMiddle, i_OpponentColor)
-                && !coinIsAtBorderOfBoard(i_GameBoard, i_XMiddle, i_YMiddle)
-                && IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
+            if (isTileOccupiedByRightColor(i_GameBoard, i_XMiddle, i_YMiddle, i_OpponentColor) && !coinIsAtBorderOfBoard(i_GameBoard, i_XMiddle, i_YMiddle) && IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
             {
                 if (IsJump(i_GameBoard, i_PlayerColor, i_XStart, i_YStart, i_XEnd, i_YEnd))
                 {
@@ -285,8 +273,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         }
 
         // Check that the move are in the bound of board game 
-        public static bool MoveIsInbound(GameBoard i_GameBoard, int i_XStart,
-            int i_YStart, int i_XEnd, int i_YEnd)
+        public static bool MoveIsInbound(GameBoard i_GameBoard, int i_XStart, int i_YStart, int i_XEnd, int i_YEnd)
         {
             bool o_IsMoveInBound = true;
 
@@ -306,13 +293,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_IsMoveInBound = false;
             }
-            return o_IsMoveInBound;
 
+            return o_IsMoveInBound;
         }
 
         // Check if another jump is possible
-        public static bool IsJumpAvalaible(GameBoard i_GameBoard, char i_PlayerColor,
-            int i_XPoint, int i_YPoint)
+        public static bool IsJumpAvalaible(GameBoard i_GameBoard, char i_PlayerColor, int i_XPoint, int i_YPoint)
         {
             bool o_IsJumpAvailable = true;
 
@@ -325,6 +311,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 isColorX = false;
             }
+
             // If the element is a king enter the two if and check 4 options if not check the only two option available for it
             if (isKing || isColorX)
             {
@@ -335,6 +322,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         o_IsJumpAvailable = false;
                     }
                 }
+
                 if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint - 2, i_YPoint + 2))
                 {
                     if (IsJump(i_GameBoard, i_PlayerColor, i_XPoint, i_YPoint, i_XPoint - 2, i_YPoint + 2))
@@ -343,6 +331,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
+
             if (isKing || !isColorX)
             {
                 if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint - 2))
@@ -352,6 +341,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         o_IsJumpAvailable = false;
                     }
                 }
+
                 if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint + 2))
                 {
                     if (IsJump(i_GameBoard, i_PlayerColor, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint + 2))
@@ -360,6 +350,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
+
             return !o_IsJumpAvailable;
         }
 
@@ -372,14 +363,16 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             if (i_GameBoard.Board[i_XPoint, i_YPoint].IsKing)
             {
                 o_ShouldTurnKing = false;
-                // Check if color O is go to the last row
             }
+
+            // Check if color O is go to the last row
             else if (i_GameBoard.Board[i_XPoint, i_YPoint].CoinColor.CompareTo('O') == 0)
             {
                 if (i_XPoint != i_GameBoard.BoardSize - 2)
                 {
                     o_ShouldTurnKing = false;
                 }
+
                 // Check if color X is go to the first row
             }
             else
@@ -389,10 +382,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     o_ShouldTurnKing = false;
                 }
             }
+
             return o_ShouldTurnKing;
         }
-
-        //Computer part
 
         // Randomly choose the next move of the computer
         public static string NextMoveComputer(GameBoard i_GameBoard, Player i_CurrentPlayer)
@@ -400,7 +392,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             string o_NextMove = string.Empty;
             Random random = new Random();
             ArrayList allMovePossible = AllMovePossible(i_GameBoard, i_CurrentPlayer);
-            // Do the random selection
             int numberMovePossible = allMovePossible.Count;
             int indexMove = random.Next(numberMovePossible);
             o_NextMove = (string)allMovePossible[indexMove];
@@ -411,7 +402,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static ArrayList AllMovePossible(GameBoard i_GameBoard, Player i_CurrentPlayer)
         {
             ArrayList o_AllMovePossible = new ArrayList();
-
             bool isJumpPossible = !NoOpponentToEat(i_GameBoard, i_CurrentPlayer.Color);
 
             if (isJumpPossible)
@@ -422,6 +412,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_AllMovePossible = allSimpleMoveAvailable(i_GameBoard, i_CurrentPlayer);
             }
+
             return o_AllMovePossible;
         }
 
@@ -441,36 +432,33 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                         if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
                         {
-                            if (MoveIsInbound(i_GameBoard, i, j, i - 2, j - 2) &&
-                                IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 2, j - 2))
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 2, j - 2) && IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 2, j - 2))
                             {
                                 o_AllJumpAvailable.Add(getStringMove(i, j, i - 2, j - 2));
                             }
-                            if (MoveIsInbound(i_GameBoard, i, j, i - 2, j + 2) &&
-                              IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 2, j + 2))
+
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 2, j + 2) && IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 2, j + 2))
                             {
                                 o_AllJumpAvailable.Add(getStringMove(i, j, i - 2, j + 2));
-
                             }
                         }
+
                         if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('O') == 0))
                         {
-                            if (MoveIsInbound(i_GameBoard, i, j, i + 2, j - 2) &&
-                                IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 2, j - 2))
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 2, j - 2) && IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 2, j - 2))
                             {
                                 o_AllJumpAvailable.Add(getStringMove(i, j, i + 2, j - 2));
                             }
-                            if (MoveIsInbound(i_GameBoard, i, j, i + 2, j + 2) &&
-                                IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 2, j + 2))
+
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 2, j + 2) && IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 2, j + 2))
                             {
                                 o_AllJumpAvailable.Add(getStringMove(i, j, i + 2, j + 2));
-
                             }
                         }
-
                     }
                 }
             }
+
             return o_AllJumpAvailable;
         }
 
@@ -489,36 +477,33 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                         if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
                         {
-                            if (MoveIsInbound(i_GameBoard, i, j, i - 1, j - 1) &&
-                                IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 1, j - 1))
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 1, j - 1) && IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 1, j - 1))
                             {
                                 o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j - 1));
                             }
-                            if (MoveIsInbound(i_GameBoard, i, j, i - 1, j + 1) &&
-                              IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 1, j + 1))
+
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 1, j + 1) && IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 1, j + 1))
                             {
                                 o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j + 1));
-
                             }
                         }
+
                         if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('O') == 0))
                         {
-                            if (MoveIsInbound(i_GameBoard, i, j, i + 1, j - 1) &&
-                                IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 1, j - 1))
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 1, j - 1) && IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 1, j - 1))
                             {
                                 o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j - 1));
                             }
-                            if (MoveIsInbound(i_GameBoard, i, j, i + 1, j + 1) &&
-                                IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 1, j + 1))
+
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 1, j + 1) && IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 1, j + 1))
                             {
                                 o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j + 1));
-
                             }
                         }
-
                     }
                 }
             }
+
             return o_AllSimpleMoveAvailable;
         }
 
@@ -529,7 +514,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             char yStartLetter = (char)(i_Start + 'A' - 1);
             char xEndLetter = (char)(i_XEnd + 'a' - 1);
             char yEndLetter = (char)(i_YEnd + 'A' - 1);
-            o_StringMove = "" + yStartLetter + xStartLetter + ">" + yEndLetter + xEndLetter;
+            o_StringMove = string.Empty + yStartLetter + xStartLetter + ">" + yEndLetter + xEndLetter;
             return o_StringMove;
         }
 
@@ -543,6 +528,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_IsDraw = false;
             }
+
             return o_IsDraw;
         }
     }

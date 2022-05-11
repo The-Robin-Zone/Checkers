@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Input
@@ -27,6 +28,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     Console.WriteLine("The number you entered is not valid");
                 }
             }
+
             return o_IntNumOfPlayers;
         }
 
@@ -40,7 +42,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 Console.WriteLine("Please enter player's " + i_PlayerNum + " name");
                 o_PlayerName = Console.ReadLine();
 
-                if (o_PlayerName.Contains(" ") || String.IsNullOrEmpty(o_PlayerName))
+                if (o_PlayerName.Contains(" ") || string.IsNullOrEmpty(o_PlayerName))
                 {
                     Console.WriteLine("Please enter a name without spaces");
                 }
@@ -54,6 +56,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     validString = false;
                 }
             }
+
             return o_PlayerName;
         }
 
@@ -80,6 +83,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     validNumberEnter = false;
                 }
             }
+
             return o_IntBoardSize;
         }
 
@@ -124,6 +128,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 GameManager.EndGame();
             }
+
             if (i_PlayerMove.Length != 5 || string.Equals(i_PlayerMove, string.Empty))
             {
                 o_MoveStringIsValid = false;
@@ -148,8 +153,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_MoveStringIsValid = false;
             }
-            return o_MoveStringIsValid;
-        
+
+            return o_MoveStringIsValid;        
         }
     }
 }

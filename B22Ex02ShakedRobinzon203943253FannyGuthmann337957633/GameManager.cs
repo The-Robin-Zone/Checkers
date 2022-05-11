@@ -11,6 +11,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         private bool m_IsRoundDraw;
         private int m_NumOfPlayers;
 
+        public static void EndGame()
+        {
+            Output.EndGamePrompt();
+            Environment.Exit(0);
+        }
+
         public void InitializeGame()
         {
             m_NumOfPlayers = Input.NumberOfPlayers();
@@ -30,10 +36,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             this.m_HasRoundEnded = false;
             this.m_IsRoundDraw = false;
             Output.PrintInstructions();
-            //Ex02.ConsoleUtils.Screen.Clear();
+            //// Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
             startGame();
-
         }
 
         private void startGame()
@@ -43,18 +48,18 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Output.Print2DArray(m_GameBoard);
             Output.PressToContinuePrompt();
 
-            //Ex02.ConsoleUtils.Screen.Clear();
+            // Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
 
             while (!m_HasRoundEnded)
             {
-                if (Logic.AllMovePossible(m_GameBoard,m_Player1).Count != 0)
+                if (Logic.AllMovePossible(m_GameBoard, m_Player1).Count != 0)
                 {
                     Output.Print2DArray(m_GameBoard);
                     startTurn(m_Player1, m_Player2);
                 }
 
-                if (Logic.AllMovePossible(m_GameBoard,m_Player2).Count != 0)
+                if (Logic.AllMovePossible(m_GameBoard, m_Player2).Count != 0)
                 {
                     // if second player is human we also print board
                     if (m_NumOfPlayers == 2)
@@ -65,19 +70,19 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     startTurn(m_Player2, m_Player1);
                 }
 
-                if (Logic.AllMovePossible(m_GameBoard,m_Player1).Count == 0 && Logic.AllMovePossible(m_GameBoard,m_Player2).Count == 0)
+                if (Logic.AllMovePossible(m_GameBoard, m_Player1).Count == 0 && Logic.AllMovePossible(m_GameBoard, m_Player2).Count == 0)
                 {
                     endRound();
                 }
             }
-            endRound();
 
+            endRound();
         }
 
         private void startTurn(Player i_CurrPlayerTurn, Player i_CurrEnemyPlayer)
         {
             bool isMoveJump = true;
-            string PlayerMove = String.Empty;
+            string PlayerMove = string.Empty;
 
             if (m_NumOfPlayers == 1 && string.Equals(i_CurrPlayerTurn.PlayerName, "Computer"))
             {
@@ -111,7 +116,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 makeCoinCapture(i_CurrPlayerTurn, i_CurrEnemyPlayer, xStart, yStart, xEnd, yEnd);
             }
 
-            //Check for draw before ending players turn
+            // Check for draw before ending players turn
             if (Logic.IsDraw(this.m_GameBoard, i_CurrPlayerTurn) && Logic.IsDraw(this.m_GameBoard, i_CurrEnemyPlayer))
             {
                 this.m_HasRoundEnded = true;
@@ -119,12 +124,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 endRound();
             }
 
-            //Ex02.ConsoleUtils.Screen.Clear();
+            // Ex02.ConsoleUtils.Screen.Clear();
             Console.WriteLine("Screen was cleared");
         }
 
-        private void makeCoinCapture(Player i_CurrPlayerTurn, Player i_CurrEnemyPlayer, int i_XStart,
-            int i_YStart, int i_XEnd, int i_YEnd)
+        private void makeCoinCapture(Player i_CurrPlayerTurn, Player i_CurrEnemyPlayer, int i_XStart, int i_YStart, int i_XEnd, int i_YEnd)
         {
             bool wasKingCaptured = this.m_GameBoard.Board[(i_XStart + i_XEnd) / 2, (i_YStart + i_YEnd) / 2].IsKing;
             this.m_GameBoard.Board[(i_XStart + i_XEnd) / 2, (i_YStart + i_YEnd) / 2] = null;
@@ -153,7 +157,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
         }
 
-        private void limitedTurn(Player i_CurrPlayerTurn, Player i_CurrEnemyPlayer , int i_XActuallPoint, int i_YActuallPoint)
+        private void limitedTurn(Player i_CurrPlayerTurn, Player i_CurrEnemyPlayer, int i_XActuallPoint, int i_YActuallPoint)
         {
             string playerLimitedMove = string.Empty;
             bool isLimitedMoveIllegal = true;
@@ -199,7 +203,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 turnToKing(xEnd, yEnd);
             }
 
-            //do actual capture
+            // Do actual capture
             makeCoinCapture(i_CurrPlayerTurn, i_CurrEnemyPlayer, xStart, yStart, xEnd, yEnd);
 
             // Check if another capure is possible
@@ -260,12 +264,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
         }
 
-        public static void EndGame()
-        {
-            Output.EndGamePrompt();
-            Environment.Exit(0);
-        }
-
         private string getPlayerMove(Player i_CurrPlayerTurn)
         {
             string o_PlayerMove = string.Empty;
@@ -275,7 +273,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             // Checks that move is syntactically & logically legal
             while (isMoveSyntaxIllegal || isMoveLogicIllegal)
             {
-
                 o_PlayerMove = Input.ReadMoveString(i_CurrPlayerTurn);
                 isMoveSyntaxIllegal = !Input.IsMoveLegal(o_PlayerMove);
                 if (!isMoveSyntaxIllegal)
@@ -285,7 +282,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                 if (isMoveSyntaxIllegal || isMoveLogicIllegal)
                 {
-                    if (!Logic.NoOpponentToEat(this.m_GameBoard,i_CurrPlayerTurn.Color))
+                    if (!Logic.NoOpponentToEat(this.m_GameBoard, i_CurrPlayerTurn.Color))
                     {
                         Output.MustCapturePromt();
                     }
@@ -293,9 +290,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         Output.InvalidInputPrompt();
                     }
+
                     Output.MoveSyntaxPrompt();
                 }
             }
+
             return o_PlayerMove;
         }
 
@@ -315,6 +314,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 m_Player1.NumberKingsLeft++;
                 m_Player1.NumberPawnsLeft--;
             }
+
             if (this.m_GameBoard.Board[i_XEnd, i_YEnd].CoinColor == 'X')
             {
                 this.m_GameBoard.Board[i_XEnd, i_YEnd].CoinColor = 'Z';

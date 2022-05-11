@@ -11,7 +11,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         private int m_NumberKingsLeft;
         private char m_CoinColor;
 
-        public Player(string i_playerName, int i_boardSize ,char i_coinColor)
+        public Player(string i_playerName, int i_boardSize, char i_coinColor)
         {
             this.m_PlayerName = i_playerName;
             this.m_Score = 0;
@@ -29,40 +29,40 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public int Score
         {
-            set
-            {
-                this.m_Score = value;
-            }
-
             get
             {
                 return this.m_Score;
+            }
+
+            set
+            {
+                this.m_Score = value;
             }
         }
 
         public int NumberPawnsLeft
         {
-            set
-            {
-                this.m_NumberPawnsLeft = value;
-            }
-
             get
             {
                 return this.m_NumberPawnsLeft;
+            }
+
+            set
+            {
+                this.m_NumberPawnsLeft = value;
             }
         }
 
         public int NumberKingsLeft
         {
-            set
-            {
-                this.m_NumberKingsLeft = value;
-            }
-
             get
             {
                 return this.m_NumberKingsLeft;
+            }
+
+            set
+            {
+                this.m_NumberKingsLeft = value;
             }
         }
 
@@ -73,6 +73,5 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 return this.m_CoinColor;
             }
         }
-
     }
 }
