@@ -120,10 +120,18 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     {
                         isSimpleMove = false;
                     }
+                    else if (!IsTileFree(gameBoard, xEnd, yEnd))
+                    {
+                        isSimpleMove = false;
+                    }
                 }
                 else if (playerColor.CompareTo('X') == 0 && !gameBoard.Board[xStart, yStart].IsKing)
                 {
                     if (xEnd > xStart)
+                    {
+                        isSimpleMove = false;
+                    }
+                    else if (!IsTileFree(gameBoard, xEnd, yEnd))
                     {
                         isSimpleMove = false;
                     }
@@ -455,18 +463,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return o_allJumpAvailable;
         }
 
-        private static string getStringMove(int xStart, int yStart, int xEnd, int yEnd)
-        {
-            string o_stringMove = string.Empty;
-            char xStartLetter = (char)(xStart + 'a' - 1);
-            char yStartLetter = (char)(yStart + 'A' - 1);
-            char xEndLetter = (char)(xEnd + 'a' - 1);
-            char yEndLetter = (char)(yEnd + 'A' - 1);
-            o_stringMove = xStartLetter + yStartLetter + ">" + xEndLetter + yEndLetter;
-            return o_stringMove;
-        }
-         // Check all possible single move possible, and return all of the
-         private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player)
+
+
+        // Check all possible single move possible, and return all of the
+        private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player)
         {
             ArrayList o_allSimpleMoveAvailable = new ArrayList();
 
@@ -511,6 +511,17 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
             }
             return o_allSimpleMoveAvailable;
+        }
+
+        private static string getStringMove(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            string o_stringMove = string.Empty;
+            char xStartLetter = (char)(xStart + 'a' - 1);
+            char yStartLetter = (char)(yStart + 'A' - 1);
+            char xEndLetter = (char)(xEnd + 'a' - 1);
+            char yEndLetter = (char)(yEnd + 'A' - 1);
+            o_stringMove = "" + yStartLetter + xStartLetter + ">" + yEndLetter + xEndLetter;
+            return o_stringMove;
         }
 
         // Check if the next has a move possible if not return draw
