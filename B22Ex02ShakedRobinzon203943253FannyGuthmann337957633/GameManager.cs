@@ -13,16 +13,16 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public void InitializeGame()
         {
-            numOfPlayers = Input.numberOfPlayers();
-            int boardSize = Input.boardSize();
-            string namePlayer1 = Input.getPlayerName(1);
+            numOfPlayers = Input.NumberOfPlayers();
+            int boardSize = Input.BoardSize();
+            string namePlayer1 = Input.GetPlayerName(1);
             this.player1 = new Player(namePlayer1, boardSize, 'O');
 
             string namePlayer2 = "Computer";
 
             if (numOfPlayers == 2)
             {
-                namePlayer2 = Input.getPlayerName(2);
+                namePlayer2 = Input.GetPlayerName(2);
             }
 
             this.player2 = new Player(namePlayer2, boardSize, 'X');
@@ -246,7 +246,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
                 else
                 {
-                    Output.InvalidinputPrompt();
+                    Output.InvalidInputPrompt();
                 }
             }
         }
@@ -276,7 +276,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
                 if (isMoveSyntaxIllegal || isMoveLogicIllegal)
                 {
-                    Output.InvalidinputPrompt();
+                    Output.InvalidInputPrompt();
                     Output.MoveSyntaxPrompt();
                     // ADD - if statement - if must eat than print different prompt ask fanny which function to use
                 }

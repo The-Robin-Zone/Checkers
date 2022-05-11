@@ -3,10 +3,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Output
     {
-        public Output()
-        {
-
-        }
 
         public static void Print2DArray(GameBoard boardGame)
         {
@@ -100,7 +96,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             PressToContinue();
         }
 
-        public static void InvalidinputPrompt()
+        public static void InvalidInputPrompt()
         {
             Console.WriteLine();
             Console.WriteLine("Please enter a valid input");

@@ -3,7 +3,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Input
     {
-        public static int numberOfPlayers()
+        public static int NumberOfPlayers()
         {
             bool validNumberEnter = true;
             int intNumOfPlayers = 0;
@@ -30,7 +30,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return intNumOfPlayers;
         }
 
-        public static string getPlayerName(int i_playerNum)
+        public static string GetPlayerName(int i_playerNum)
         {
             bool validString = true;
             string playerName = "";
@@ -57,7 +57,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return playerName;
         }
 
-        public static int boardSize()
+        public static int BoardSize()
         {
             bool validNumberEnter = true;
             int intBoardSize = 0;
@@ -100,7 +100,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
                 else
                 {
-                    Output.InvalidinputPrompt();
+                    Output.InvalidInputPrompt();
                 }
             }
             
