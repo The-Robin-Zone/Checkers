@@ -4,78 +4,79 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
     public class Output
     {
 
-        public static void Print2DArray(GameBoard boardGame)
+        public static void Print2DArray(GameBoard i_BoardGame)
         {
             char columnPrint = 'A';
             char rowPrint = 'a';
 
             // Print column index
             Console.Write("  ");
-            for (int i = 0; i < boardGame.BoardSize - 2; i++)
+            for (int i = 0; i < i_BoardGame.BoardSize - 2; i++)
             {
                 Console.Write(" " + (char)(columnPrint+i) + "  ");
             }
 
-        Console.WriteLine("");
-        PrintRowSeperator(boardGame.BoardSize);
+            Console.WriteLine();
+            PrintRowSeperator(i_BoardGame.BoardSize);
 
-            for (int i = 1; i < boardGame.BoardSize - 1; i++)
+            for (int i = 1; i < i_BoardGame.BoardSize - 1; i++)
             {
 
-            // Print row index
-            Console.Write((char)(rowPrint + i - 1));
+                // Print row index
+                Console.Write((char)(rowPrint + i - 1));
 
-                for (int j = 1; j < boardGame.BoardSize - 1; j++)
+                for (int j = 1; j < i_BoardGame.BoardSize - 1; j++)
                 {
-                    if (boardGame.Board[i,j] != null)
+                    if (i_BoardGame.Board[i,j] != null)
                     {
-                        Console.Write("| " + boardGame.Board[i, j].CoinColor + " ");
+                        Console.Write("| " + i_BoardGame.Board[i, j].CoinColor + " ");
                     }
                     else
                     {
                         Console.Write("|   ");
                     }
                 }
+
                 Console.WriteLine("|");
-                PrintRowSeperator(boardGame.BoardSize);
+                PrintRowSeperator(i_BoardGame.BoardSize);
             }  
         }
 
-        public static void PrintRowSeperator(int boardSize)
+        public static void PrintRowSeperator(int i_BoardSize)
         {
             Console.Write(" ");
 
-            if (boardSize == 12)
+            if (i_BoardSize == 12)
             {
                 Console.Write("=========================================");
             }
 
-            if (boardSize == 10)
+            if (i_BoardSize == 10)
             {
                 Console.Write("=================================");
             }
 
-            if (boardSize == 8)
+            if (i_BoardSize == 8)
             {
                 Console.Write("=========================");
             }
 
-            Console.WriteLine("");  
+            Console.WriteLine();  
         }
 
-        public static void CurrentGameStatus(Player player1, Player player2)
+        public static void CurrentGameStatus(Player i_Player1, Player i_Player2)
         {
             Console.WriteLine("This is the current game status:");
             Console.WriteLine();
             Console.WriteLine("Player 1:");
-            Console.WriteLine("Name: " + player1.PlayerName);
-            Console.WriteLine("Score: " + player1.Score);
-            Console.WriteLine("Color: " + player1.Color);
+            Console.WriteLine("Name: " + i_Player1.PlayerName);
+            Console.WriteLine("Score: " + i_Player1.Score);
+            Console.WriteLine("Color: " + i_Player1.Color);
             Console.WriteLine();
             Console.WriteLine("Player 2:");
-            Console.WriteLine("Name: " + player2.PlayerName);
-            Console.WriteLine("Score: " + player2.Score);
-            Console.WriteLine("Color: " + player2.Color);
+            Console.WriteLine("Name: " + i_Player2.PlayerName);
+            Console.WriteLine("Score: " + i_Player2.Score);
+            Console.WriteLine("Color: " + i_Player2.Color);
             Console.WriteLine();
         }
 
@@ -92,7 +93,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine("6. A pawn which reaches the far side of the board, whether by means of a jump or a simple move, becomes a King,");
             Console.WriteLine("7. Kings can move forward or backward, one square at a time in a diagonal direction to an unoccupied square.");
             Console.WriteLine("8. Whenever a player is able to make a capture he must do so. \nWhen there is more than one way to jump, a player may choose any way he wishes, not necessarily the one which results in the capture of the greatest number of opposing units. \nHowever, once a player chooses a sequence of captures, he must make all the captures possible in that sequence.");
-            PressToContinue();
+            PressToContinuePrompt();
         }
 
         public static void InvalidInputPrompt()
@@ -118,11 +119,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.ReadLine();
         }
 
-        public static void EndRoundPrompt(string winnerName)
+        public static void EndRoundPrompt(string i_WinnerName)
         {
             Console.WriteLine();
             Console.WriteLine("Game has ended!");
-            Console.WriteLine(winnerName + " won!");
+            Console.WriteLine(i_WinnerName + " won!");
             Console.WriteLine("Press 'q' to quit or 'n' for new game:");
             Console.WriteLine();
         }
@@ -134,7 +135,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             Console.WriteLine();
         }
 
-        public static void PressToContinue()
+        public static void PressToContinuePrompt()
         {
             Console.WriteLine();
             Console.WriteLine("Press any key to continue");

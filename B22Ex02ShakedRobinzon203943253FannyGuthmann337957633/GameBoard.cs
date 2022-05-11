@@ -38,11 +38,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             }
         }
 
-        public Coin[,] InitializeBoard()
+        public void InitializeBoard()
         {
             int numOfCoinRows = ((this.m_BoardSize - 2) / 2) - 1;
      
-
             //initialize 'O' Coins
             for (int i = 1; i < numOfCoinRows + 1; i++)
             {
@@ -76,11 +75,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
-
-            return this.m_Board;
         }
 
-        public Coin[,] ClearBoard()
+        public void ClearBoard()
         {
             for (int i = 0; i < this.m_BoardSize; i++)
             {
@@ -89,8 +86,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     this.m_Board[i,j] = null;
                 }
             }
-
-            return this.m_Board;
         }
     }
 }

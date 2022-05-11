@@ -6,19 +6,19 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static int NumberOfPlayers()
         {
             bool validNumberEnter = true;
-            int intNumOfPlayers = 0;
-            string i_numOfPlayers;
+            int o_IntNumOfPlayers = 0;
+            string numOfPlayers;
+
             Console.WriteLine("Welcome to Checkers!");
 
             while (validNumberEnter)
             { 
                 Console.WriteLine("Please choose number of players: 1/2");
                
-                i_numOfPlayers = Console.ReadLine();
-                int.TryParse(i_numOfPlayers, out intNumOfPlayers);
+                numOfPlayers = Console.ReadLine();
+                int.TryParse(numOfPlayers, out o_IntNumOfPlayers);
 
-
-                if (intNumOfPlayers == 2 || intNumOfPlayers == 1)
+                if (o_IntNumOfPlayers == 2 || o_IntNumOfPlayers == 1)
                 {
                     validNumberEnter = false;
                 }
@@ -27,24 +27,24 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     Console.WriteLine("The number you entered is not valid");
                 }
             }
-            return intNumOfPlayers;
+            return o_IntNumOfPlayers;
         }
 
-        public static string GetPlayerName(int i_playerNum)
+        public static string GetPlayerName(int i_PlayerNum)
         {
             bool validString = true;
-            string playerName = string.Empty;
+            string o_PlayerName = string.Empty;
 
             while (validString)
             {
-                Console.WriteLine("Please enter player's " + i_playerNum + " name");
-                playerName = Console.ReadLine();
+                Console.WriteLine("Please enter player's " + i_PlayerNum + " name");
+                o_PlayerName = Console.ReadLine();
 
-                if (playerName.Contains(" ") || String.IsNullOrEmpty(playerName))
+                if (o_PlayerName.Contains(" ") || String.IsNullOrEmpty(o_PlayerName))
                 {
                     Console.WriteLine("Please enter a name without spaces");
                 }
-                else if (playerName.Length > 10)
+                else if (o_PlayerName.Length > 10)
                 {
                     Console.WriteLine("Please enter a name with less than 10 " +
                         "characters");
@@ -54,24 +54,24 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     validString = false;
                 }
             }
-            return playerName;
+            return o_PlayerName;
         }
 
         public static int BoardSize()
         {
             bool validNumberEnter = true;
-            int intBoardSize = 0;
-            string i_boardSize;
+            int o_IntBoardSize = 0;
+            string boardSize = string.Empty;
 
             while (validNumberEnter)
             {
                 Console.WriteLine("Please choose board size: 6/8/10");
 
-                i_boardSize = Console.ReadLine();
+                boardSize = Console.ReadLine();
 
-                int.TryParse(i_boardSize, out intBoardSize);
+                int.TryParse(boardSize, out o_IntBoardSize);
 
-                if (intBoardSize != 6 && intBoardSize != 8 && intBoardSize != 10)
+                if (o_IntBoardSize != 6 && o_IntBoardSize != 8 && o_IntBoardSize != 10)
                 {
                     Console.WriteLine("The size you entered is not correct");
                 }
@@ -80,14 +80,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     validNumberEnter = false;
                 }
             }
-            return intBoardSize;
+            return o_IntBoardSize;
         }
 
         public static char ReadChar()
         {
             bool isInputCorrect = true;
-            string userInput;
-            char userOutput = ' ';
+            string userInput = string.Empty;
+            char o_UserOutput = ' ';
 
             while (isInputCorrect)
             {
@@ -96,7 +96,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 if (userInput.Length == 1)
                 {
                     isInputCorrect = false;
-                    userOutput = userInput[0];
+                    o_UserOutput = userInput[0];
                 }
                 else
                 {
@@ -104,50 +104,51 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
             }
             
-            return userOutput;
+            return o_UserOutput;
         }
 
-        public static string ReadMoveString(Player currPlayerTurn)
+        public static string ReadMoveString(Player i_CurrPlayerTurn)
         {
-            Console.WriteLine(currPlayerTurn.PlayerName + "'s turn (" + currPlayerTurn.Color + "): ");
-            string i_playerMove = Console.ReadLine();
+            string o_PlayerMove = string.Empty;
+            Console.WriteLine(i_CurrPlayerTurn.PlayerName + "'s turn (" + i_CurrPlayerTurn.Color + "): ");
+            o_PlayerMove = Console.ReadLine();
             Console.WriteLine();
-            return i_playerMove;
+            return o_PlayerMove;
         }
 
-        public static bool IsMoveLegal(string i_playerMove)
+        public static bool IsMoveLegal(string i_PlayerMove)
         {
-            bool moveStringIsValid = true;
+            bool o_MoveStringIsValid = true;
 
-            if (String.Equals(i_playerMove, "q"))
+            if (string.Equals(i_PlayerMove, "q"))
             {
                 GameManager.EndGame();
             }
-            if (i_playerMove.Length != 5 || String.Equals(i_playerMove, string.Empty))
+            if (i_PlayerMove.Length != 5 || string.Equals(i_PlayerMove, string.Empty))
             {
-                moveStringIsValid = false;
+                o_MoveStringIsValid = false;
             }
-            else if (!char.IsUpper(i_playerMove[0]))
+            else if (!char.IsUpper(i_PlayerMove[0]))
             {
-                moveStringIsValid = false;
+                o_MoveStringIsValid = false;
             }
-            else if (!char.IsLower(i_playerMove[1]))
+            else if (!char.IsLower(i_PlayerMove[1]))
             {
-                moveStringIsValid = false;
+                o_MoveStringIsValid = false;
             }
-            else if ('>'.CompareTo(i_playerMove[2]) != 0)
+            else if ('>'.CompareTo(i_PlayerMove[2]) != 0)
             {
-                moveStringIsValid = false;
+                o_MoveStringIsValid = false;
             }
-            else if (!char.IsUpper(i_playerMove[3]))
+            else if (!char.IsUpper(i_PlayerMove[3]))
             {
-                moveStringIsValid = false;
+                o_MoveStringIsValid = false;
             }
-            else if (!char.IsLower(i_playerMove[4]))
+            else if (!char.IsLower(i_PlayerMove[4]))
             {
-                moveStringIsValid = false;
+                o_MoveStringIsValid = false;
             }
-            return moveStringIsValid;
+            return o_MoveStringIsValid;
         
         }
     }

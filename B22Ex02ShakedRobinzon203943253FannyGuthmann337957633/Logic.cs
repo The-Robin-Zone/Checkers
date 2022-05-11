@@ -5,238 +5,243 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Logic
     {
-        public static bool MoveIsValid(GameBoard gameBoard, string location, Player player)
+        public static bool MoveIsValid(GameBoard i_GameBoard, string i_MoveString, Player i_CurrPlayer)
         {
-            bool o_typeMove = true;
-
-            int xStart = location[1] - 'a' + 1;
-            int yStart = location[0] - 'A' + 1;
-            int xEnd = location[4] - 'a' + 1;
-            int yEnd = location[3] - 'A' + 1;
+            bool o_IsMoveValid = true;
+            int xStart = i_MoveString[1] - 'a' + 1;
+            int yStart = i_MoveString[0] - 'A' + 1;
+            int xEnd = i_MoveString[4] - 'a' + 1;
+            int yEnd = i_MoveString[3] - 'A' + 1;
 
             // Check move is in bound of the board
-            if (!MoveIsInbound(gameBoard, xStart, yStart, xEnd, yEnd))
+            if (!MoveIsInbound(i_GameBoard, xStart, yStart, xEnd, yEnd))
             {
-                o_typeMove = false;
+                o_IsMoveValid = false;
             }
             // Check if element exist in tile
-            else if (IsTileFree(gameBoard, xStart, yStart))
+            else if (IsTileFree(i_GameBoard, xStart, yStart))
             {
-                o_typeMove = false;
+                o_IsMoveValid = false;
             }
             // Check if the tile is occupy by the right coin
-            else if (!CoinExistAtLocation(gameBoard, xStart, yStart, player.Color))
+            else if (!CoinExistAtLocation(i_GameBoard, xStart, yStart, i_CurrPlayer.Color))
             {
-                o_typeMove = false;
+                o_IsMoveValid = false;
             }
             // Check destination tile to be free
-            else if (!IsTileFree(gameBoard, xEnd, yEnd))
+            else if (!IsTileFree(i_GameBoard, xEnd, yEnd))
             {
-                o_typeMove = false;
+                o_IsMoveValid = false;
             }
             else
             {
                 // Player move is not check
-                o_typeMove = false;
+                o_IsMoveValid = false;
                 // Check that player is doing a simple move
-                if (IsSimpleMove(gameBoard, player.Color, xStart, yStart, xEnd, yEnd))
+                if (IsSimpleMove(i_GameBoard, i_CurrPlayer.Color, xStart, yStart, xEnd, yEnd))
                 {
-                    o_typeMove = true;
-                    if (!NoOpponentToEat(gameBoard, player.Color))
+                    o_IsMoveValid = true;
+                    if (!NoOpponentToEat(i_GameBoard, i_CurrPlayer.Color))
                     {
-                        o_typeMove = false;
+                        o_IsMoveValid = false;
                     }
                 }
                 // Check if the player is doing jump
-                else if (IsJump(gameBoard, player.Color, xStart, yStart, xEnd, yEnd))
+                else if (IsJump(i_GameBoard, i_CurrPlayer.Color, xStart, yStart, xEnd, yEnd))
                 {
-                    o_typeMove = true;
+                    o_IsMoveValid = true;
                 }
             }
-            return o_typeMove;
+            return o_IsMoveValid;
         }
 
         // Check if a coin exist at the location of the right color
-        public static bool CoinExistAtLocation(GameBoard gameBoard,
-            int xPoint, int yPoint, char playerColor)
+        public static bool CoinExistAtLocation(GameBoard i_GameBoard,
+            int i_XPoint, int i_YPoint, char i_PlayerColor)
         {
-            bool o_coinExistAtLocation = true;
-            if (playerColor.CompareTo('O') == 0 && gameBoard.Board[xPoint, yPoint].IsKing)
+            bool o_CoinExistAtLocation = true;
+
+            if (i_PlayerColor.CompareTo('O') == 0 && i_GameBoard.Board[i_XPoint, i_YPoint].IsKing)
             {
-                playerColor = 'Q';
+                i_PlayerColor = 'Q';
             }
-            else if (playerColor.CompareTo('X') == 0 && gameBoard.Board[xPoint, yPoint].IsKing)
+            else if (i_PlayerColor.CompareTo('X') == 0 && i_GameBoard.Board[i_XPoint, i_YPoint].IsKing)
             {
-                playerColor = 'Z';
+                i_PlayerColor = 'Z';
             }
 
-            if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo(playerColor) != 0)
+            if (i_GameBoard.Board[i_XPoint, i_YPoint].CoinColor.CompareTo(i_PlayerColor) != 0)
             {
-                o_coinExistAtLocation = false;
+                o_CoinExistAtLocation = false;
             }
-            return o_coinExistAtLocation;
+            return o_CoinExistAtLocation;
         }
 
         // Check if the square is empty
-        public static bool IsTileFree(GameBoard gameBoard,
-            int xPoint, int yPoint)
+        public static bool IsTileFree(GameBoard i_GameBoard,
+            int i_XPoint, int i_YPoint)
         {
-            bool o_coinDestinationIsFree = true;
+            bool o_IsTileDestinationFree = true;
 
-            if (gameBoard.Board[xPoint, yPoint] != null)
+            if (i_GameBoard.Board[i_XPoint, i_YPoint] != null)
             {
-                o_coinDestinationIsFree = false;
+                o_IsTileDestinationFree = false;
             }
 
-            return o_coinDestinationIsFree;
+            return o_IsTileDestinationFree;
         }
 
         // Check if the tile is occupied by the given color
-        private static bool tileOccupiedByColor(GameBoard gameBoard, int xPoint, int yPoint,
-            char playerColor)
+        private static bool isTileOccupiedByRightColor(GameBoard i_GameBoard, int i_XPoint, int i_YPoint,
+            char i_PlayerColor)
         {
-            bool tileIsnotEmptyAndOccupyByRightColor = true;
-            if (IsTileFree(gameBoard, xPoint, yPoint))
+            bool o_IsTileOccupiedByRightColor = true;
+
+            if (IsTileFree(i_GameBoard, i_XPoint, i_YPoint))
             {
-                tileIsnotEmptyAndOccupyByRightColor = false;
+                o_IsTileOccupiedByRightColor = false;
             }
-            else if (!CoinExistAtLocation(gameBoard, xPoint, yPoint, playerColor))
+            else if (!CoinExistAtLocation(i_GameBoard, i_XPoint, i_YPoint, i_PlayerColor))
             {
-                tileIsnotEmptyAndOccupyByRightColor = false;
+                o_IsTileOccupiedByRightColor = false;
             }
-            return tileIsnotEmptyAndOccupyByRightColor;
+            return o_IsTileOccupiedByRightColor;
         }
 
         // Check that the move is a simple legal move
-        public static bool IsSimpleMove(GameBoard gameBoard, char playerColor, int xStart,
-            int yStart, int xEnd, int yEnd)
+        public static bool IsSimpleMove(GameBoard i_GameBoard, char i_PlayerColor, int i_XStart,
+            int i_YStart, int i_XEnd, int i_YEnd)
         {
-            bool isSimpleMove = true;
-            if (Math.Abs(xEnd - xStart) == 1 && Math.Abs(yEnd - yStart) == 1)
+            bool o_IsSimpleMove = true;
+
+            if (Math.Abs(i_XEnd - i_XStart) == 1 && Math.Abs(i_YEnd - i_YStart) == 1)
             {
-                if (playerColor.CompareTo('O') == 0 && !gameBoard.Board[xStart, yStart].IsKing)
+                if (i_PlayerColor.CompareTo('O') == 0 && !i_GameBoard.Board[i_XStart, i_YStart].IsKing)
                 {
-                    if (xEnd < xStart)
+                    if (i_XEnd < i_XStart)
                     {
-                        isSimpleMove = false;
-                    } else if (!IsTileFree(gameBoard, xEnd, yEnd))
+                        o_IsSimpleMove = false;
+                    } else if (!IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
                     {
-                        isSimpleMove = false;
+                        o_IsSimpleMove = false;
                     }
                 }
-                else if (playerColor.CompareTo('X') == 0 && !gameBoard.Board[xStart, yStart].IsKing)
+                else if (i_PlayerColor.CompareTo('X') == 0 && !i_GameBoard.Board[i_XStart, i_YStart].IsKing)
                 {
-                    if (xEnd > xStart)
+                    if (i_XEnd > i_XStart)
                     {
-                        isSimpleMove = false;
+                        o_IsSimpleMove = false;
                     }
-                    else if (!IsTileFree(gameBoard, xEnd, yEnd))
+                    else if (!IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
                     {
-                        isSimpleMove = false;
+                        o_IsSimpleMove = false;
                     }
                 }
             }
             else
             {
-                isSimpleMove = false;
+                o_IsSimpleMove = false;
             }
-            return isSimpleMove;
+            return o_IsSimpleMove;
         }
 
         // Check if the move is a jump legal
-        public static bool IsJump(GameBoard gameBoard, char playerColor, int xStart,
-            int yStart, int xEnd, int yEnd)
+        public static bool IsJump(GameBoard i_GameBoard, char i_PlayerColor, int i_XStart,
+            int i_YStart, int i_XEnd, int I_YEnd)
         {
-            bool isJump = true;
-            if (Math.Abs(xEnd - xStart) == 2 && Math.Abs(yEnd - yStart) == 2)
+            bool o_IsJump = true;
+
+            if (Math.Abs(i_XEnd - i_XStart) == 2 && Math.Abs(I_YEnd - i_YStart) == 2)
             {
-                int xMidlle = (xStart + xEnd) / 2;
-                int yMidlle = (yStart + yEnd) / 2;
-                if (!MoveIsInbound(gameBoard, xStart, yStart, xEnd, yEnd))
+                int xMidlle = (i_XStart + i_XEnd) / 2;
+                int yMidlle = (i_YStart + I_YEnd) / 2;
+
+                if (!MoveIsInbound(i_GameBoard, i_XStart, i_YStart, i_XEnd, I_YEnd))
                 {
-                    isJump = false;
+                    o_IsJump = false;
                 }
-                else if (playerColor.CompareTo('O') == 0)
+                else if (i_PlayerColor.CompareTo('O') == 0)
                 {
-                    if (xEnd < xStart && !gameBoard.Board[xStart, yStart].IsKing)
+                    if (i_XEnd < i_XStart && !i_GameBoard.Board[i_XStart, i_YStart].IsKing)
                     {
-                        isJump = false;
+                        o_IsJump = false;
                     }
-                    else if (!IsTileFree(gameBoard, xEnd, yEnd)
-                      || IsTileFree(gameBoard, xMidlle, yMidlle) ||
-                      CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
+                    else if (!IsTileFree(i_GameBoard, i_XEnd, I_YEnd)
+                      || IsTileFree(i_GameBoard, xMidlle, yMidlle) ||
+                      CoinExistAtLocation(i_GameBoard, xMidlle, yMidlle, i_PlayerColor))
                     {
-                        isJump = false;
+                        o_IsJump = false;
                     }
                 }
-                else if (playerColor.CompareTo('X') == 0)
+                else if (i_PlayerColor.CompareTo('X') == 0)
                 {
-                    if (xEnd > xStart && !gameBoard.Board[xStart, yStart].IsKing)
+                    if (i_XEnd > i_XStart && !i_GameBoard.Board[i_XStart, i_YStart].IsKing)
                     {
-                        isJump = false;
+                        o_IsJump = false;
                     }
-                    else if (!IsTileFree(gameBoard, xEnd, yEnd)
-                      || IsTileFree(gameBoard, xMidlle, yMidlle) ||
-                      CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
+                    else if (!IsTileFree(i_GameBoard, i_XEnd, I_YEnd)
+                      || IsTileFree(i_GameBoard, xMidlle, yMidlle) ||
+                      CoinExistAtLocation(i_GameBoard, xMidlle, yMidlle, i_PlayerColor))
                     {
-                        isJump = false;
+                        o_IsJump = false;
                     }
                 }
             }
             else
             {
-                isJump = false;
+                o_IsJump = false;
             }
-            return isJump;
+            return o_IsJump;
         }
 
         // Check if the player can eat an opponent
-        public static bool NoOpponentToEat(GameBoard gameBoard, char playerColor)
+        public static bool NoOpponentToEat(GameBoard i_GameBoard, char i_PlayerColor)
         {
-            bool noOpponentToEat = true;
+            bool o_NoOpponentToEat = true;
             char opponentColor = 'O';
-            if (playerColor.CompareTo('O') == 0)
+
+            if (i_PlayerColor.CompareTo('O') == 0)
             {
                 opponentColor = 'X';
             }
 
-            for (int i = 1; i < gameBoard.BoardSize - 1; i++)
+            for (int i = 1; i < i_GameBoard.BoardSize - 1; i++)
             {
-                for (int j = 1; j < gameBoard.BoardSize - 1; j++)
+                for (int j = 1; j < i_GameBoard.BoardSize - 1; j++)
                 {
-                    if (tileOccupiedByColor(gameBoard, i, j, playerColor))
+                    if (isTileOccupiedByRightColor(i_GameBoard, i, j, i_PlayerColor))
                     {
 
                         // Check if element need to go up or down
-                        if (playerColor.CompareTo('X') == 0 || gameBoard.Board[i, j].IsKing)
+                        if (i_PlayerColor.CompareTo('X') == 0 || i_GameBoard.Board[i, j].IsKing)
 
                         {
-                            if (isNeighborOccupyByOpponent(gameBoard, i, j, i - 2, j + 2, i - 1, j + 1,
-                                playerColor, opponentColor))
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i - 2, j + 2, i - 1, j + 1,
+                                i_PlayerColor, opponentColor))
                             {
-                                noOpponentToEat = false;
+                                o_NoOpponentToEat = false;
                                 goto end;
                             }
-                            if (isNeighborOccupyByOpponent(gameBoard, i, j, i - 2, j - 2, i - 1, j - 1,
-                                playerColor, opponentColor))
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i - 2, j - 2, i - 1, j - 1,
+                                i_PlayerColor, opponentColor))
                             {
-                                noOpponentToEat = false;
+                                o_NoOpponentToEat = false;
                                 goto end;
                             }
                         }
-                        if (playerColor.CompareTo('O') == 0 || gameBoard.Board[i, j].IsKing)
+                        if (i_PlayerColor.CompareTo('O') == 0 || i_GameBoard.Board[i, j].IsKing)
 
                         {
-                            if (isNeighborOccupyByOpponent(gameBoard, i, j, i + 2, j + 2, i + 1, j + 1,
-                                playerColor, opponentColor))
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i + 2, j + 2, i + 1, j + 1,
+                                i_PlayerColor, opponentColor))
                             {
-                                noOpponentToEat = false;
+                                o_NoOpponentToEat = false;
                                 goto end;
                             }
-                            if (isNeighborOccupyByOpponent(gameBoard, i, j, i + 2, j - 2, i + 1, j - 1,
-                                playerColor, opponentColor))
+                            if (isNeighborOccupyByOpponent(i_GameBoard, i, j, i + 2, j - 2, i + 1, j - 1,
+                                i_PlayerColor, opponentColor))
                             {
-                                noOpponentToEat = false;
+                                o_NoOpponentToEat = false;
                                 goto end;
                             }
                         }
@@ -244,214 +249,221 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
             }
         end:
-            return noOpponentToEat;
+            return o_NoOpponentToEat;
         }
 
         // Check if the neighbor of the coin is occupied by opponent
-        private static bool isNeighborOccupyByOpponent(GameBoard gameBoard, int xStart, int yStart,
-            int xEnd, int yEnd, int xMiddle, int yMiddle, char playerColor, char opponentColor)
+        private static bool isNeighborOccupyByOpponent(GameBoard i_GameBoard, int i_XStart, int i_YStart,
+            int i_XEnd, int i_YEnd, int i_XMiddle, int i_YMiddle, char i_PlayerColor, char i_OpponentColor)
         {
-            bool o_isNeighborOccupyByOpponent = false;
-            if (tileOccupiedByColor(gameBoard, xMiddle, yMiddle, opponentColor)
-                && !coinIsAtBorderOfBoard(gameBoard, xMiddle, yMiddle)
-                && IsTileFree(gameBoard, xEnd, yEnd))
-            {
-                if (IsJump(gameBoard, playerColor, xStart, yStart, xEnd, yEnd))
-                {
-                    o_isNeighborOccupyByOpponent = true;
+            bool o_IsNeighborOccupyByOpponent = true;
 
+            if (isTileOccupiedByRightColor(i_GameBoard, i_XMiddle, i_YMiddle, i_OpponentColor)
+                && !coinIsAtBorderOfBoard(i_GameBoard, i_XMiddle, i_YMiddle)
+                && IsTileFree(i_GameBoard, i_XEnd, i_YEnd))
+            {
+                if (IsJump(i_GameBoard, i_PlayerColor, i_XStart, i_YStart, i_XEnd, i_YEnd))
+                {
+                    o_IsNeighborOccupyByOpponent = false;
                 }
             }
 
-            return o_isNeighborOccupyByOpponent;
+            return !o_IsNeighborOccupyByOpponent;
         }
 
         // Check if the coin is at one of the extremity of the board
-        private static bool coinIsAtBorderOfBoard(GameBoard gameBoard, int xPoint, int yPoint)
+        private static bool coinIsAtBorderOfBoard(GameBoard i_GameBoard, int i_XPoint, int i_YPoint)
         {
-            bool coinIsAtBorderOfBoard = false;
-            if ((xPoint <= 1) || (yPoint <= 1) || (xPoint >= (gameBoard.BoardSize - 2)) || (yPoint >= (gameBoard.BoardSize - 2)))
+            bool o_CoinIsAtBorderOfBoard = true;
+
+            if ((i_XPoint <= 1) || (i_YPoint <= 1) || (i_XPoint >= (i_GameBoard.BoardSize - 2)) || (i_YPoint >= (i_GameBoard.BoardSize - 2)))
             {
-                coinIsAtBorderOfBoard = true;
+                o_CoinIsAtBorderOfBoard = false;
             }
 
-            return coinIsAtBorderOfBoard;
+            return !o_CoinIsAtBorderOfBoard;
         }
 
         // Check that the move are in the bound of board game 
-        public static bool MoveIsInbound(GameBoard gameBoard, int xStart,
-            int yStart, int xEnd, int yEnd)
+        public static bool MoveIsInbound(GameBoard i_GameBoard, int i_XStart,
+            int i_YStart, int i_XEnd, int i_YEnd)
         {
-            bool moveIsInBound = true;
+            bool o_IsMoveInBound = true;
 
-            if (xStart > gameBoard.BoardSize - 2 || xStart <= 0)
+            if (i_XStart > i_GameBoard.BoardSize - 2 || i_XStart <= 0)
             {
-                moveIsInBound = false;
+                o_IsMoveInBound = false;
             }
-            else if (yStart > gameBoard.BoardSize - 2 || yStart <= 0)
+            else if (i_YStart > i_GameBoard.BoardSize - 2 || i_YStart <= 0)
             {
-                moveIsInBound = false;
+                o_IsMoveInBound = false;
             }
-            else if (xEnd > gameBoard.BoardSize - 2 || xEnd <= 0)
+            else if (i_XEnd > i_GameBoard.BoardSize - 2 || i_XEnd <= 0)
             {
-                moveIsInBound = false;
+                o_IsMoveInBound = false;
             }
-            else if (yEnd > gameBoard.BoardSize - 2 || yEnd <= 0)
+            else if (i_YEnd > i_GameBoard.BoardSize - 2 || i_YEnd <= 0)
             {
-                moveIsInBound = false;
+                o_IsMoveInBound = false;
             }
-            return moveIsInBound;
+            return o_IsMoveInBound;
 
         }
 
         // Check if another jump is possible
-        public static bool IsJumpAvalaible(GameBoard gameBoard, char playerColor,
-            int xPoint, int yPoint)
+        public static bool IsJumpAvalaible(GameBoard i_GameBoard, char i_PlayerColor,
+            int i_XPoint, int i_YPoint)
         {
-            bool o_isJumpAvailable = false;
+            bool o_IsJumpAvailable = true;
+
             // Check if the coin is a king
-            bool isKing = gameBoard.Board[xPoint, yPoint].IsKing;
-            bool isX = true;
+            bool isKing = i_GameBoard.Board[i_XPoint, i_YPoint].IsKing;
+            bool isColorX = true;
+
             // Check the color of the coin
-            if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo('O') == 0)
+            if (i_GameBoard.Board[i_XPoint, i_YPoint].CoinColor.CompareTo('O') == 0)
             {
-                isX = false;
+                isColorX = false;
             }
             // If the element is a king enter the two if and check 4 options if not check the only two option available for it
-            if (isKing || isX)
+            if (isKing || isColorX)
             {
-                if (MoveIsInbound(gameBoard, xPoint, yPoint, xPoint - 2, yPoint - 2))
+                if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint - 2, i_YPoint - 2))
                 {
-                    if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint - 2))
+                    if (IsJump(i_GameBoard, i_PlayerColor, i_XPoint, i_YPoint, i_XPoint - 2, i_YPoint - 2))
                     {
-                        o_isJumpAvailable = true;
+                        o_IsJumpAvailable = false;
                     }
                 }
-                if (MoveIsInbound(gameBoard, xPoint, yPoint, xPoint - 2, yPoint + 2))
+                if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint - 2, i_YPoint + 2))
                 {
-                    if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint + 2))
+                    if (IsJump(i_GameBoard, i_PlayerColor, i_XPoint, i_YPoint, i_XPoint - 2, i_YPoint + 2))
                     {
-                        o_isJumpAvailable = true;
+                        o_IsJumpAvailable = false;
                     }
                 }
             }
-            if (isKing || !isX)
+            if (isKing || !isColorX)
             {
-                if (MoveIsInbound(gameBoard, xPoint, yPoint, xPoint + 2, yPoint - 2))
+                if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint - 2))
                 {
-                    if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint + 2, yPoint - 2))
+                    if (IsJump(i_GameBoard, i_PlayerColor, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint - 2))
                     {
-                        o_isJumpAvailable = true;
+                        o_IsJumpAvailable = false;
                     }
                 }
-                if (MoveIsInbound(gameBoard, xPoint, yPoint, xPoint + 2, yPoint + 2))
+                if (MoveIsInbound(i_GameBoard, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint + 2))
                 {
-                    if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint + 2, yPoint + 2))
+                    if (IsJump(i_GameBoard, i_PlayerColor, i_XPoint, i_YPoint, i_XPoint + 2, i_YPoint + 2))
                     {
-                        o_isJumpAvailable = true;
+                        o_IsJumpAvailable = false;
                     }
                 }
             }
-            return o_isJumpAvailable;
+            return !o_IsJumpAvailable;
         }
 
         // Check if pawn become king
-        public static bool ShouldTurnKing(GameBoard gameBoard, int xPoint, int yPoint)
+        public static bool ShouldTurnKing(GameBoard i_GameBoard, int i_XPoint, int i_YPoint)
         {
-            bool o_shouldTurnKing = true;
+            bool o_ShouldTurnKing = true;
+
             // Check if already king
-            if (gameBoard.Board[xPoint, yPoint].IsKing)
+            if (i_GameBoard.Board[i_XPoint, i_YPoint].IsKing)
             {
-                o_shouldTurnKing = false;
+                o_ShouldTurnKing = false;
                 // Check if color O is go to the last row
             }
-            else if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo('O') == 0)
+            else if (i_GameBoard.Board[i_XPoint, i_YPoint].CoinColor.CompareTo('O') == 0)
             {
-                if (xPoint != gameBoard.BoardSize - 2)
+                if (i_XPoint != i_GameBoard.BoardSize - 2)
                 {
-                    o_shouldTurnKing = false;
+                    o_ShouldTurnKing = false;
                 }
                 // Check if color X is go to the first row
             }
             else
             {
-                if (xPoint != 1)
+                if (i_XPoint != 1)
                 {
-                    o_shouldTurnKing = false;
+                    o_ShouldTurnKing = false;
                 }
             }
-            return o_shouldTurnKing;
+            return o_ShouldTurnKing;
         }
 
         //Computer part
 
         // Randomly choose the next move of the computer
-        public static string NextMoveComputer(GameBoard gameBoard, Player player)
+        public static string NextMoveComputer(GameBoard i_GameBoard, Player i_CurrentPlayer)
         {
-            string o_nextMove = string.Empty;
+            string o_NextMove = string.Empty;
             Random random = new Random();
-            ArrayList allMovePossible = AllMovePossible(gameBoard, player);
+            ArrayList allMovePossible = AllMovePossible(i_GameBoard, i_CurrentPlayer);
             // Do the random selection
             int numberMovePossible = allMovePossible.Count;
             int indexMove = random.Next(numberMovePossible);
-            o_nextMove = (string)allMovePossible[indexMove];
-            return o_nextMove;
+            o_NextMove = (string)allMovePossible[indexMove];
+            return o_NextMove;
         }
 
         // Send all the possible move possible
-        public static ArrayList AllMovePossible(GameBoard gameBoard, Player player)
+        public static ArrayList AllMovePossible(GameBoard i_GameBoard, Player i_CurrentPlayer)
         {
-            ArrayList o_allMovePossible = new ArrayList();
-            bool isJumpPossible = !NoOpponentToEat(gameBoard, player.Color);
+            ArrayList o_AllMovePossible = new ArrayList();
+
+            bool isJumpPossible = !NoOpponentToEat(i_GameBoard, i_CurrentPlayer.Color);
+
             if (isJumpPossible)
             {
-                o_allMovePossible = allJumpAvailable(gameBoard, player);
+                o_AllMovePossible = allJumpAvailable(i_GameBoard, i_CurrentPlayer);
             }
             else
             {
-                o_allMovePossible = allSimpleMoveAvailable(gameBoard, player);
+                o_AllMovePossible = allSimpleMoveAvailable(i_GameBoard, i_CurrentPlayer);
             }
-            return o_allMovePossible;
+            return o_AllMovePossible;
         }
 
         // A case a jump can happen, send all the jump possible
-        private static ArrayList allJumpAvailable(GameBoard gameBoard, Player player)
+        private static ArrayList allJumpAvailable(GameBoard i_GameBoard, Player i_CurrentPlayer)
         {
-            ArrayList o_allJumpAvailable = new ArrayList();
+            ArrayList o_AllJumpAvailable = new ArrayList();
+            bool isKing = true;
 
-            for (int i = 1; i < gameBoard.BoardSize - 1; i++)
+            for (int i = 1; i < i_GameBoard.BoardSize - 1; i++)
             {
-                for (int j = 1; j < gameBoard.BoardSize - 1; j++)
+                for (int j = 1; j < i_GameBoard.BoardSize - 1; j++)
                 {
-                    if (tileOccupiedByColor(gameBoard, i, j, player.Color))
+                    if (isTileOccupiedByRightColor(i_GameBoard, i, j, i_CurrentPlayer.Color))
                     {
-                        bool isKing = gameBoard.Board[i, j].IsKing;
+                        isKing = i_GameBoard.Board[i, j].IsKing;
 
-                        if (isKing || (gameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
+                        if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
                         {
-                            if (MoveIsInbound(gameBoard, i, j, i - 2, j - 2) &&
-                                IsJump(gameBoard, player.Color, i, j, i - 2, j - 2))
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 2, j - 2) &&
+                                IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 2, j - 2))
                             {
-                                o_allJumpAvailable.Add(getStringMove(i, j, i - 2, j - 2));
+                                o_AllJumpAvailable.Add(getStringMove(i, j, i - 2, j - 2));
                             }
-                            if (MoveIsInbound(gameBoard, i, j, i - 2, j + 2) &&
-                              IsJump(gameBoard, player.Color, i, j, i - 2, j + 2))
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 2, j + 2) &&
+                              IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 2, j + 2))
                             {
-                                o_allJumpAvailable.Add(getStringMove(i, j, i - 2, j + 2));
+                                o_AllJumpAvailable.Add(getStringMove(i, j, i - 2, j + 2));
 
                             }
                         }
-                        if (isKing || (gameBoard.Board[i, j].CoinColor.CompareTo('O') == 0))
+                        if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('O') == 0))
                         {
-                            if (MoveIsInbound(gameBoard, i, j, i + 2, j - 2) &&
-                                IsJump(gameBoard, player.Color, i, j, i + 2, j - 2))
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 2, j - 2) &&
+                                IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 2, j - 2))
                             {
-                                o_allJumpAvailable.Add(getStringMove(i, j, i + 2, j - 2));
+                                o_AllJumpAvailable.Add(getStringMove(i, j, i + 2, j - 2));
                             }
-                            if (MoveIsInbound(gameBoard, i, j, i + 2, j + 2) &&
-                                IsJump(gameBoard, player.Color, i, j, i + 2, j + 2))
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 2, j + 2) &&
+                                IsJump(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 2, j + 2))
                             {
-                                o_allJumpAvailable.Add(getStringMove(i, j, i + 2, j + 2));
+                                o_AllJumpAvailable.Add(getStringMove(i, j, i + 2, j + 2));
 
                             }
                         }
@@ -459,49 +471,47 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
-            return o_allJumpAvailable;
+            return o_AllJumpAvailable;
         }
-
-
 
          // Check all possible single move possible, and return all of the
-         private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player) 
+         private static ArrayList allSimpleMoveAvailable(GameBoard i_GameBoard, Player i_CurrentPlayer) 
         {
-            ArrayList o_allSimpleMoveAvailable = new ArrayList();
+            ArrayList o_AllSimpleMoveAvailable = new ArrayList();
 
-            for (int i = 1; i < gameBoard.BoardSize - 1; i++)
+            for (int i = 1; i < i_GameBoard.BoardSize - 1; i++)
             {
-                for (int j = 1; j < gameBoard.BoardSize - 1; j++)
+                for (int j = 1; j < i_GameBoard.BoardSize - 1; j++)
                 {
-                    if (tileOccupiedByColor(gameBoard, i, j, player.Color))
+                    if (isTileOccupiedByRightColor(i_GameBoard, i, j, i_CurrentPlayer.Color))
                     {
-                        bool isKing = gameBoard.Board[i, j].IsKing;
+                        bool isKing = i_GameBoard.Board[i, j].IsKing;
 
-                        if (isKing || (gameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
+                        if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
                         {
-                            if (MoveIsInbound(gameBoard, i, j, i - 1, j - 1) &&
-                                IsSimpleMove(gameBoard, player.Color, i, j, i - 1, j - 1))
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 1, j - 1) &&
+                                IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 1, j - 1))
                             {
-                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j - 1));
+                                o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j - 1));
                             }
-                            if (MoveIsInbound(gameBoard, i, j, i - 1, j + 1) &&
-                              IsSimpleMove(gameBoard, player.Color, i, j, i - 1, j + 1))
+                            if (MoveIsInbound(i_GameBoard, i, j, i - 1, j + 1) &&
+                              IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i - 1, j + 1))
                             {
-                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j + 1));
+                                o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j + 1));
 
                             }
                         }
-                        if (isKing || (gameBoard.Board[i, j].CoinColor.CompareTo('O') == 0))
+                        if (isKing || (i_GameBoard.Board[i, j].CoinColor.CompareTo('O') == 0))
                         {
-                            if (MoveIsInbound(gameBoard, i, j, i + 1, j - 1) &&
-                                IsSimpleMove(gameBoard, player.Color, i, j, i + 1, j - 1))
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 1, j - 1) &&
+                                IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 1, j - 1))
                             {
-                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j - 1));
+                                o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j - 1));
                             }
-                            if (MoveIsInbound(gameBoard, i, j, i + 1, j + 1) &&
-                                IsSimpleMove(gameBoard, player.Color, i, j, i + 1, j + 1))
+                            if (MoveIsInbound(i_GameBoard, i, j, i + 1, j + 1) &&
+                                IsSimpleMove(i_GameBoard, i_CurrentPlayer.Color, i, j, i + 1, j + 1))
                             {
-                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j + 1));
+                                o_AllSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j + 1));
 
                             }
                         }
@@ -509,30 +519,31 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     }
                 }
             }
-            return o_allSimpleMoveAvailable;
+            return o_AllSimpleMoveAvailable;
         }
 
-        private static string getStringMove(int xStart, int yStart, int xEnd, int yEnd)
+        private static string getStringMove(int i_XStart, int i_Start, int i_XEnd, int i_YEnd)
         {
-            string o_stringMove = string.Empty;
-            char xStartLetter = (char)(xStart + 'a' - 1);
-            char yStartLetter = (char)(yStart + 'A' - 1);
-            char xEndLetter = (char)(xEnd + 'a' - 1);
-            char yEndLetter = (char)(yEnd + 'A' - 1);
-            o_stringMove = "" + yStartLetter + xStartLetter + ">" + yEndLetter + xEndLetter;
-            return o_stringMove;
+            string o_StringMove = string.Empty;
+            char xStartLetter = (char)(i_XStart + 'a' - 1);
+            char yStartLetter = (char)(i_Start + 'A' - 1);
+            char xEndLetter = (char)(i_XEnd + 'a' - 1);
+            char yEndLetter = (char)(i_YEnd + 'A' - 1);
+            o_StringMove = "" + yStartLetter + xStartLetter + ">" + yEndLetter + xEndLetter;
+            return o_StringMove;
         }
 
         // Check if the next has a move possible if not return draw
-        public static bool IsDraw(GameBoard gameBoard, Player player)
+        public static bool IsDraw(GameBoard i_GameBoard, Player i_CurrentPlayer)
         {
-            bool o_isDraw = true;
-            ArrayList allMovePossible = AllMovePossible(gameBoard, player);
+            bool o_IsDraw = true;
+            ArrayList allMovePossible = AllMovePossible(i_GameBoard, i_CurrentPlayer);
+
             if (allMovePossible.Count != 0)
             {
-                o_isDraw = false;
+                o_IsDraw = false;
             }
-            return o_isDraw;
+            return o_IsDraw;
         }
     }
 }
