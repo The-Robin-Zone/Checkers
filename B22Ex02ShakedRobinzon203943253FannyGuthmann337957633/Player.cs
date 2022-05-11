@@ -5,26 +5,25 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Player
     {
-        private string playerName;
-        private int score;
-        private int numberPawnsLeft;
-        private int numberKingsLeft;
-        private char coinColor;
+        private string m_PlayerName;
+        private int m_Score;
+        private int m_NumberPawnsLeft;
+        private int m_NumberKingsLeft;
+        private char m_CoinColor;
 
-        // Player object constructor 
         public Player(string i_playerName, int i_boardSize ,char i_coinColor)
         {
-            this.playerName = i_playerName;
-            this.score = 0;
-            this.numberPawnsLeft = ((i_boardSize - 2) * i_boardSize) / 4;
-            this.coinColor = i_coinColor;
+            this.m_PlayerName = i_playerName;
+            this.m_Score = 0;
+            this.m_NumberPawnsLeft = ((i_boardSize - 2) * i_boardSize) / 4;
+            this.m_CoinColor = i_coinColor;
         }
 
         public string PlayerName
         {
             get
             {
-                return this.playerName;
+                return this.m_PlayerName;
             }
         }
 
@@ -32,12 +31,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             set
             {
-                this.score = value;
+                this.m_Score = value;
             }
 
             get
             {
-                return this.score;
+                return this.m_Score;
             }
         }
 
@@ -45,12 +44,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             set
             {
-                this.numberPawnsLeft = value;
+                this.m_NumberPawnsLeft = value;
             }
 
             get
             {
-                return this.numberPawnsLeft;
+                return this.m_NumberPawnsLeft;
             }
         }
 
@@ -58,12 +57,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             set
             {
-                this.numberKingsLeft = value;
+                this.m_NumberKingsLeft = value;
             }
 
             get
             {
-                return this.numberKingsLeft;
+                return this.m_NumberKingsLeft;
             }
         }
 
@@ -71,7 +70,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             get
             {
-                return this.coinColor;
+                return this.m_CoinColor;
             }
         }
 

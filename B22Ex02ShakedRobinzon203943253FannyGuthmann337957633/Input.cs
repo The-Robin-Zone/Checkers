@@ -33,7 +33,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static string GetPlayerName(int i_playerNum)
         {
             bool validString = true;
-            string playerName = "";
+            string playerName = string.Empty;
 
             while (validString)
             {

@@ -3,26 +3,25 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class GameBoard
     {
-
-    private Coin[,] board;
-    private int boardSize;
+    private Coin[,] m_Board;
+    private int m_BoardSize;
 
         public GameBoard(int i_boardSize)
         {
-            this.boardSize = i_boardSize + 2;
-            this.board = new Coin[this.boardSize, this.boardSize];
+            this.m_BoardSize = i_boardSize + 2;
+            this.m_Board = new Coin[this.m_BoardSize, this.m_BoardSize];
         }
 
         public Coin[,] Board
         {
             get
             {
-                return this.board;
+                return this.m_Board;
             }
 
             set
             {
-                this.board = value;
+                this.m_Board = value;
             }
         }
 
@@ -30,73 +29,68 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             get
             {
-                return this.boardSize;
+                return this.m_BoardSize;
             }
 
             set
             {
-                this.boardSize = value;
+                this.m_BoardSize = value;
             }
         }
 
         public Coin[,] InitializeBoard()
         {
-            int numOfCoinRows = ((this.boardSize - 2) / 2) - 1;
+            int numOfCoinRows = ((this.m_BoardSize - 2) / 2) - 1;
      
 
-            //initialize O Coins
+            //initialize 'O' Coins
             for (int i = 1; i < numOfCoinRows + 1; i++)
             {
-                for (int j = 1; j < this.boardSize - 1; j++)
+                for (int j = 1; j < this.m_BoardSize - 1; j++)
                 {
-                    // odd row & even column
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        this.board[i,j] = new Coin('O');
+                        this.m_Board[i,j] = new Coin('O');
                     }
 
-                    // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        this.board[i,j] = new Coin('O');
+                        this.m_Board[i,j] = new Coin('O');
                     }
-
                 }
             }
+
             //initialize X Coins
-            for (int i = this.boardSize - 2; i > numOfCoinRows + 2; i--)
+            for (int i = this.m_BoardSize - 2; i > numOfCoinRows + 2; i--)
             {
-                for (int j = 1; j < this.boardSize - 1; j++)
+                for (int j = 1; j < this.m_BoardSize - 1; j++)
                 {
-                    // odd row & even column
                     if (i % 2 != 0 && j % 2 == 0)
                     {
-                        this.board[i,j] = new Coin('X');
+                        this.m_Board[i,j] = new Coin('X');
                     }
 
-                    // even row & odd column
                     if (i % 2 == 0 && j % 2 != 0)
                     {
-                        this.board[i,j] = new Coin('X');
+                        this.m_Board[i,j] = new Coin('X');
                     }
-
                 }
             }
 
-            return this.board;
+            return this.m_Board;
         }
 
         public Coin[,] ClearBoard()
         {
-            for (int i = 0; i < this.boardSize; i++)
+            for (int i = 0; i < this.m_BoardSize; i++)
             {
-                for (int j = 0; j < this.boardSize; j++)
+                for (int j = 0; j < this.m_BoardSize; j++)
                 {
-                    this.board[i,j] = null;
+                    this.m_Board[i,j] = null;
                 }
             }
 
-            return this.board;
+            return this.m_Board;
         }
     }
 }

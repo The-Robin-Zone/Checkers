@@ -3,25 +3,24 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 {
     public class Coin
     {
-        private char coinColor;  //  black/white (O/X)
-        private bool isKing;     //  pawn/king
+        private char m_CoinColor;
+        private bool m_IsKing;     
        
         public Coin(char i_coinColor)
         {
-            this.coinColor = i_coinColor;
-            this.isKing = false;
+            this.m_CoinColor = i_coinColor;
+            this.m_IsKing = false;
         }
 
         public char CoinColor
         {
             set
             {
-                this.coinColor = value;
+                this.m_CoinColor = value;
             }
             get
-
             {
-                return this.coinColor;
+                return this.m_CoinColor;
             }
         }
 
@@ -29,12 +28,11 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         {
             set
             {
-                this.isKing = value;
+                this.m_IsKing = value;
             }
             get
-
             {
-                return this.isKing;
+                return this.m_IsKing;
             }
         }
     }

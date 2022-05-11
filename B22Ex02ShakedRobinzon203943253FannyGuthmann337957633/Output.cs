@@ -6,11 +6,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
         public static void Print2DArray(GameBoard boardGame)
         {
-       
             char columnPrint = 'A';
             char rowPrint = 'a';
 
-            // Print Column letters
+            // Print column index
             Console.Write("  ");
             for (int i = 0; i < boardGame.BoardSize - 2; i++)
             {
@@ -39,9 +38,9 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
                 Console.WriteLine("|");
                 PrintRowSeperator(boardGame.BoardSize);
-            }
-            
+            }  
         }
+
         public static void PrintRowSeperator(int boardSize)
         {
             Console.Write(" ");
