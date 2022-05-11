@@ -395,7 +395,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         public static ArrayList AllMovePossible(GameBoard gameBoard, Player player)
         {
             ArrayList o_allMovePossible = new ArrayList();
-            bool isJumpPossible = NoOpponentToEat(gameBoard, player.Color);
+            bool isJumpPossible = !NoOpponentToEat(gameBoard, player.Color);
             if (isJumpPossible)
             {
                 o_allMovePossible = allJumpAvailable(gameBoard, player);

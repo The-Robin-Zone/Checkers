@@ -51,16 +51,27 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
 
             while (!hasRoundEnded && true)
             {
-                Output.Print2DArray(gameBoard);
-                StartTurn(player1, player2);
-
-                // if second player is human we also print board
-                if (numOfPlayers == 2)
+                if (Logic.AllMovePossible(gameBoard,player1).Count != 0)
                 {
                     Output.Print2DArray(gameBoard);
+                    StartTurn(player1, player2);
                 }
 
-                StartTurn(player2, player1);
+                if (Logic.AllMovePossible(gameBoard,player1).Count != 0)
+                {
+                    // if second player is human we also print board
+                    if (numOfPlayers == 2)
+                    {
+                        Output.Print2DArray(gameBoard);
+                    }
+
+                    StartTurn(player2, player1);
+                }
+
+                if (Logic.AllMovePossible(gameBoard,player1).Count == 0 && Logic.AllMovePossible(gameBoard,player2).Count == 0)
+                {
+                    EndRound();
+                }
             }
             EndRound();
 
