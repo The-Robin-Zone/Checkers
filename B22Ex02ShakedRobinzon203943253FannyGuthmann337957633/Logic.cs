@@ -64,7 +64,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             if (playerColor.CompareTo('O') == 0 && gameBoard.Board[xPoint, yPoint].IsKing)
             {
                 playerColor = 'Q';
-            } else if (playerColor.CompareTo('X') == 0 && gameBoard.Board[xPoint, yPoint].IsKing)
+            }
+            else if (playerColor.CompareTo('X') == 0 && gameBoard.Board[xPoint, yPoint].IsKing)
             {
                 playerColor = 'Z';
             }
@@ -153,9 +154,10 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (xEnd < xStart && !gameBoard.Board[xStart, yStart].IsKing)
                     {
                         isJump = false;
-                    } else if (!IsTileFree(gameBoard, xEnd, yEnd)
-                        || IsTileFree(gameBoard, xMidlle, yMidlle) ||
-                        CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
+                    }
+                    else if (!IsTileFree(gameBoard, xEnd, yEnd)
+                      || IsTileFree(gameBoard, xMidlle, yMidlle) ||
+                      CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                     {
                         isJump = false;
                     }
@@ -165,13 +167,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (xEnd > xStart && !gameBoard.Board[xStart, yStart].IsKing)
                     {
                         isJump = false;
-                    } else if (!IsTileFree(gameBoard, xEnd, yEnd)
-                        || IsTileFree(gameBoard, xMidlle, yMidlle) ||
-                        CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
+                    }
+                    else if (!IsTileFree(gameBoard, xEnd, yEnd)
+                      || IsTileFree(gameBoard, xMidlle, yMidlle) ||
+                      CoinExistAtLocation(gameBoard, xMidlle, yMidlle, playerColor))
                     {
                         isJump = false;
                     }
-                } 
+                }
             }
             else
             {
@@ -214,7 +217,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                                 goto end;
                             }
                         }
-                        if (playerColor.CompareTo('O') == 0|| gameBoard.Board[i, j].IsKing)
+                        if (playerColor.CompareTo('O') == 0 || gameBoard.Board[i, j].IsKing)
 
                         {
                             if (isNeighborOccupyByOpponent(gameBoard, i, j, i + 2, j + 2, i + 1, j + 1,
@@ -253,7 +256,7 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                 }
             }
 
-                return o_isNeighborOccupyByOpponent;
+            return o_isNeighborOccupyByOpponent;
         }
 
         // Check if the coin is at one of the extremity of the board
@@ -311,8 +314,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             if (isKing || isX)
             {
                 if (MoveIsInbound(gameBoard, xPoint, yPoint, xPoint - 2, yPoint - 2))
-                { 
-                    if ( IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint - 2))
+                {
+                    if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint - 2))
                     {
                         o_isJumpAvailable = true;
                     }
@@ -322,10 +325,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint - 2, yPoint + 2))
                     {
                         o_isJumpAvailable = true;
-
                     }
                 }
-                
             }
             if (isKing || !isX)
             {
@@ -341,7 +342,6 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (IsJump(gameBoard, playerColor, xPoint, yPoint, xPoint + 2, yPoint + 2))
                     {
                         o_isJumpAvailable = true;
-
                     }
                 }
             }
@@ -357,7 +357,8 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             {
                 o_shouldTurnKing = false;
                 // Check if color O is go to the last row
-            } else if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo('O') == 0)
+            }
+            else if (gameBoard.Board[xPoint, yPoint].CoinColor.CompareTo('O') == 0)
             {
                 if (xPoint != gameBoard.BoardSize - 2)
                 {
@@ -378,30 +379,31 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         //Computer part
 
         // Randomly choose the next move of the computer
-        public static int[] NextMoveComputer(GameBoard gameBoard, Player player)
+        public static string NextMoveComputer(GameBoard gameBoard, Player player)
         {
-            int[] o_nextMove = new int[2];
+            string o_nextMove = string.Empty;
             Random random = new Random();
             ArrayList allMovePossible = AllMovePossible(gameBoard, player);
             // Do the random selection
             int numberMovePossible = allMovePossible.Count;
             int indexMove = random.Next(numberMovePossible);
-            o_nextMove = (int[])allMovePossible[indexMove];
+            o_nextMove = (string)allMovePossible[indexMove];
             return o_nextMove;
         }
 
         // Send all the possible move possible
         public static ArrayList AllMovePossible(GameBoard gameBoard, Player player)
         {
-            ArrayList o_allMovePossible = new ArrayList(new ArrayList());
+            ArrayList o_allMovePossible = new ArrayList();
             bool isJumpPossible = NoOpponentToEat(gameBoard, player.Color);
             if (isJumpPossible)
             {
                 o_allMovePossible = allJumpAvailable(gameBoard, player);
-            } else
+            }
+            else
             {
                 o_allMovePossible = allSimpleMoveAvailable(gameBoard, player);
-            }         
+            }
             return o_allMovePossible;
         }
 
@@ -417,18 +419,18 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                     if (tileOccupiedByColor(gameBoard, i, j, player.Color))
                     {
                         bool isKing = gameBoard.Board[i, j].IsKing;
-                       
+
                         if (isKing || (gameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
                         {
                             if (MoveIsInbound(gameBoard, i, j, i - 2, j - 2) &&
                                 IsJump(gameBoard, player.Color, i, j, i - 2, j - 2))
                             {
-                                o_allJumpAvailable.Add(new ArrayList() { i - 2, j - 2 });
+                                o_allJumpAvailable.Add(getStringMove(i, j, i - 2, j - 2));
                             }
-                              if (MoveIsInbound(gameBoard, i, j, i - 2, j + 2) &&
-                                IsJump(gameBoard, player.Color, i, j, i - 2, j + 2))
+                            if (MoveIsInbound(gameBoard, i, j, i - 2, j + 2) &&
+                              IsJump(gameBoard, player.Color, i, j, i - 2, j + 2))
                             {
-                                o_allJumpAvailable.Add(new ArrayList() { i - 2, j + 2 });
+                                o_allJumpAvailable.Add(getStringMove(i, j, i - 2, j + 2));
 
                             }
                         }
@@ -437,12 +439,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                             if (MoveIsInbound(gameBoard, i, j, i + 2, j - 2) &&
                                 IsJump(gameBoard, player.Color, i, j, i + 2, j - 2))
                             {
-                                o_allJumpAvailable.Add(new ArrayList() { i + 2, j - 2 });
+                                o_allJumpAvailable.Add(getStringMove(i, j, i + 2, j - 2));
                             }
                             if (MoveIsInbound(gameBoard, i, j, i + 2, j + 2) &&
                                 IsJump(gameBoard, player.Color, i, j, i + 2, j + 2))
                             {
-                                o_allJumpAvailable.Add(new ArrayList() { i + 2, j + 2 });
+                                o_allJumpAvailable.Add(getStringMove(i, j, i + 2, j + 2));
 
                             }
                         }
@@ -453,8 +455,18 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
             return o_allJumpAvailable;
         }
 
-        // Check all possible single move possible, and return all of them
-        private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player)
+        private static string getStringMove(int xStart, int yStart, int xEnd, int yEnd)
+        {
+            string o_stringMove = string.Empty;
+            char xStartLetter = (char)(xStart + 'a' - 1);
+            char yStartLetter = (char)(yStart + 'A' - 1);
+            char xEndLetter = (char)(xEnd + 'a' - 1);
+            char yEndLetter = (char)(yEnd + 'A' - 1);
+            o_stringMove = xStartLetter + yStartLetter + ">" + xEndLetter + yEndLetter;
+            return o_stringMove;
+        }
+         // Check all possible single move possible, and return all of the
+         private static ArrayList allSimpleMoveAvailable(GameBoard gameBoard, Player player)
         {
             ArrayList o_allSimpleMoveAvailable = new ArrayList();
 
@@ -469,14 +481,14 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                         if (isKing || (gameBoard.Board[i, j].CoinColor.CompareTo('X') == 0))
                         {
                             if (MoveIsInbound(gameBoard, i, j, i - 1, j - 1) &&
-                                IsSimpleMove(gameBoard,player.Color, i, j, i - 1, j - 1))
+                                IsSimpleMove(gameBoard, player.Color, i, j, i - 1, j - 1))
                             {
-                                o_allSimpleMoveAvailable.Add(new ArrayList() { i - 1, j - 1 });
+                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j - 1));
                             }
                             if (MoveIsInbound(gameBoard, i, j, i - 1, j + 1) &&
                               IsSimpleMove(gameBoard, player.Color, i, j, i - 1, j + 1))
                             {
-                                o_allSimpleMoveAvailable.Add(new ArrayList() { i - 1, j + 1 });
+                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i - 1, j + 1));
 
                             }
                         }
@@ -485,12 +497,12 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
                             if (MoveIsInbound(gameBoard, i, j, i + 1, j - 1) &&
                                 IsSimpleMove(gameBoard, player.Color, i, j, i + 1, j - 1))
                             {
-                                o_allSimpleMoveAvailable.Add(new ArrayList() { i + 1, j - 1 });
+                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j - 1));
                             }
                             if (MoveIsInbound(gameBoard, i, j, i + 1, j + 1) &&
                                 IsSimpleMove(gameBoard, player.Color, i, j, i + 1, j + 1))
                             {
-                                o_allSimpleMoveAvailable.Add(new ArrayList() { i + 1, j + 1 });
+                                o_allSimpleMoveAvailable.Add(getStringMove(i, j, i + 1, j + 1));
 
                             }
                         }
@@ -514,4 +526,3 @@ namespace B22Ex02ShakedRobinzon203943253FannyGuthmann337957633
         }
     }
 }
-
